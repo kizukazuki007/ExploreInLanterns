@@ -17,6 +17,7 @@ public class TitleSystem : MonoBehaviour
     public bool mode = false;    // モード選択のトリガー
     public bool ReEnter = false; // ボタンを押してねを二回発生させないトリガー
     public bool difficulty_View = false; // 難易度選択のトリガー
+    public bool Back = false; // 戻るトリガー
 
     private float NextTime;         // 文字点滅の奴に使ってるだけ
     private float interval = 0.8f;  // 周期
@@ -59,9 +60,18 @@ public class TitleSystem : MonoBehaviour
             ReEnter = true; // 再入力防止をtrueに
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)&& Back == true)
         {
-            mode = true;
+            Back = false;
+            difficulty_View = false;
+
+            EASY.SetActive(false);
+            NORMAL.SetActive(false);
+            HARD.SetActive(false);
+
+            SINGLE.SetActive(true);
+            MULTI.SetActive(true);
+            
         }
 
         if (mode == true) // モード選択トリガーがtrueなら
@@ -96,6 +106,7 @@ public class TitleSystem : MonoBehaviour
     public void SinglePlay()
     {
         Member = 0;
+        Back = true;
         difficulty_View = true;  // 難易度選択トリガーをtrueに
         SINGLE.SetActive(false); // SINGLEボタンを非表示
         MULTI.SetActive(false);  // MULTIボタンを非表示
@@ -105,7 +116,7 @@ public class TitleSystem : MonoBehaviour
 
     public void MultiPlay()
     {
-        SceneManager.LoadScene("MultiSetting"); // マルチプレイ参加画面へ移動
+        //SceneManager.LoadScene("MultiSetting"); // マルチプレイ参加画面へ移動
     }
 
     public void difficulty_set() // Update参照
