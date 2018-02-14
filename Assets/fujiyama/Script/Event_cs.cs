@@ -16,6 +16,7 @@ public class Event_cs : MonoBehaviour {
 
     int hougyouku;
 
+    [SerializeField, Tooltip("pos")]
     Vector3 pos;
 
     bool seisei = true;//生成のやつ
@@ -70,22 +71,22 @@ public class Event_cs : MonoBehaviour {
     {
         print("反応"); //デバッグ
 
-        if (Type == 1 && other.tag == "a") stairs(); //階段
+        if (Type == 1 && other.tag == "Player") stairs(); //階段
 
-        if (Type == 2 && other.tag == "a") trasureChest(); //宝箱を空ける前
+        if (Type == 2 && other.tag == "Attack") trasureChest(); //宝箱を空ける前
 
-        if (Type == 2 && other.tag == "b"&&openflg==true) trsureChestopen(); //宝箱が開いた時
+        if (Type == 2 && other.tag == "Player"&&openflg==true) trsureChestopen(); //宝箱が開いた時
 
-        if (Type == 3 && other.tag == "a") trap();//罠
+        if (Type == 3 && other.tag == "Player") trap();//罠
     }
 
 
     public void stairs()
     {
         print("階段");
-        ///////////////////////////
-        //今村氏のメソッドを呼ぶ//
-        /////////////////////////
+
+        MapManege move = GetComponent<MapManege>();
+        move.StairsUP();
     }
 
 
@@ -108,8 +109,8 @@ public class Event_cs : MonoBehaviour {
             {
                 print("aaaaa");
                
+                yapre.transform.position = pos;//new Vector3(pos.x, pos.y, 0);
                 Instantiate(yapre);
-                yapre.transform.position = new Vector3(pos.x, pos.y, 0);
                 seisei = false;
             }
         }
@@ -126,24 +127,24 @@ public class Event_cs : MonoBehaviour {
                 if (hougyouku <= 20) //宝玉３生成　20%
                 {
                     //GameObject hougyo3 = (GameObject)Resources.Load("宝玉3");
+                    hougyo3.transform.position = pos;// new Vector3(pos.x, pos.y, 0);
                     Instantiate(hougyo3);
-                    hougyo3.transform.position = new Vector3(pos.x, pos.y, 0);
                     seisei = false;
                 }
 
                 else if (hougyouku>=80) //宝玉２生成　20%
                 {
                     //GameObject hougyo2 = (GameObject)Resources.Load("２宝玉");
+                    hougyo2.transform.position = pos;//new Vector3(pos.x, pos.y, 0);
                     Instantiate(hougyo2);
-                    hougyo2.transform.position = new Vector3(pos.x, pos.y, 0);
                     seisei = false;
 
                 }
                 else //それ以外
                 {
                     //GameObject hougyo = (GameObject)Resources.Load("宝玉");
+                    hougyo.transform.position = pos; // new Vector3(pos.x, pos.y, 0);
                     Instantiate(hougyo);
-                    hougyo.transform.position = new Vector3(pos.x, pos.y, 0);
                     seisei = false;
 
                 }
@@ -157,8 +158,8 @@ public class Event_cs : MonoBehaviour {
         {
             if (seisei == true)
             {
+                oill.transform.position = pos;// new Vector3(pos.x, pos.y, 0);
                 Instantiate(oill);
-                oill.transform.position = new Vector3(pos.x, pos.y, 0);
                 seisei = false;
             }
            
@@ -179,6 +180,11 @@ public class Event_cs : MonoBehaviour {
             if (yumiya <= max)
             {
                 yumiya = yumiya + yuram;
+
+                if (yumiya > max)
+                {
+                    yumiya = max;
+                }
                 
             }
             print(yumiya);
@@ -190,11 +196,20 @@ public class Event_cs : MonoBehaviour {
 
     public void trap()
     {
+       
+        player_move man = GameObject.Find("地面_s").GetComponent<player_move>();
+        man.GetComponent<player_move>().enabled = false;
 
+        
+      
+        
+     
     }
+   
 
    
     
     
         
 }
+

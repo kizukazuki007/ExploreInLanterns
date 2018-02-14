@@ -3,6 +3,7 @@ using System.Collections;
 
 public class player_move : MonoBehaviour {
     public float speed=0;
+    public bool walkflg = true;
 
 	// Use this for initialization
 	void Start () {
@@ -12,24 +13,34 @@ public class player_move : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetAxis("Horizontal")==1)
-        {
-            transform.Translate(speed * Time.deltaTime,0,0);
+
+            if (Input.GetAxis("Horizontal") == 1)
+            {
+                transform.Translate(speed * Time.deltaTime, 0, 0);
+            }
+
+            if (Input.GetAxis("Horizontal") == -1)
+            {
+                transform.Translate(-speed * Time.deltaTime, 0, 0);
+            }
+
+            if (Input.GetAxis("Vertical") == 1)
+            {
+                transform.Translate(0, speed * Time.deltaTime, 0);
+            }
+
+            if (Input.GetAxis("Vertical") == -1)
+            {
+                transform.Translate(0, -speed * Time.deltaTime, 0);
+            }
         }
 
-        if (Input.GetAxis("Horizontal")==-1)
-        {
-            transform.Translate(-speed * Time.deltaTime,0, 0);
-        }
+    public void true_walk()
+    {
+        player_move move2 = GetComponent<player_move>();
 
-        if (Input.GetAxis("Vertical")==1)
-        {
-            transform.Translate(0,speed * Time.deltaTime,0);
-        }
-
-        if (Input.GetAxis("Vertical")==-1)
-        {
-            transform.Translate(0, -speed * Time.deltaTime, 0);
-        }
+        move2.GetComponent<player_move>().enabled = true;
     }
-}
+  }
+    
+
