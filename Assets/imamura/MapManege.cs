@@ -15,7 +15,11 @@ public class MapManege : MonoBehaviour {
 
     GameObject[,] mapChipG;
     GameObject[,] ivent;
-    int mapNomber;
+    int mapNomber=-1;
+
+   public Camera Camera;//モンスターの出現位置を制限するためにアタッチしてほしい
+    public int monsterDistanceX; public int monsterDistanceY;
+
     //一時的に書いておく
     public int playerCount;     //タイトルで設定した数字をここにいれる
     int[,,] mapChipI;
@@ -23,22 +27,37 @@ public class MapManege : MonoBehaviour {
     {
         AllCreate();
     }
-    public void StairsUP()//階段を上がった時。               他の人が呼び出すのはここだけ
+    public void StairsUP()//階段を上がった時。               他の人が呼び出すところ
     {
         AllDestroy();
         AllCreate();
     }
-    public void MonsterDedCreate()
+    public void MonsterDedCreate()//モンスターが死んだとき　　　他の人が呼び出す奴２
     {
-        int x = Random.Range(0, mapChipI.GetLength(0));
-        int y = Random.Range(0, mapChipI.GetLength(1));
-
+        do
+        {
+            int x = Random.Range(0, mapChipI.GetLength(1));                                     //修正
+            int y = Random.Range(0, mapChipI.GetLength(2));
+            if (aisle(x, y) && (Camera.transform.position.x + monsterDistanceX < x || Camera.transform.position.x - monsterDistanceX > x|| Camera.transform.position.y + monsterDistanceY < y || Camera.transform.position.y - monsterDistanceY > y))
+            {
+                int i = Random.Range(0, Monster.Length);
+                Monster[i].transform.position = new Vector2(x, y);
+                ivent[x, y] = Instantiate(Monster[i]);
+            }
+        } while (true);
     }
-
 
     void AllCreate()     //最初と階段を上った時に呼び出す。
     {
-        mapNomber = Random.Range(0, 3);
+        do
+        {
+            int randam = Random.Range(0, 3);
+            if (randam != mapNomber)
+            {
+                mapNomber = randam;
+                break;
+            }
+        } while (true);
         MapCreate();
         PlayrCreate();
         StairsCreate();
@@ -47,9 +66,9 @@ public class MapManege : MonoBehaviour {
     }
     void AllDestroy()
     {
-        for (int i = 0; i < mapChipI.GetLength(0); i++)
+        for (int i = 0; i < mapChipI.GetLength(1); i++)
         {
-            for (int j = 0; j < mapChipI.GetLength(1); j++)
+            for (int j = 0; j < mapChipI.GetLength(2); j++)
             {
                 if (mapChipG[i, j] != null)
                 {
@@ -72,9 +91,9 @@ public class MapManege : MonoBehaviour {
     void MapCreate()
     {
 
-        for (int i = 0; i < mapChipI.GetLength(0); i++)
+        for (int i = 0; i < mapChipI.GetLength(1); i++)
         {
-            for (int j = 0; j < mapChipI.GetLength(1); j++)
+            for (int j = 0; j < mapChipI.GetLength(2); j++)
             {
                 if (mapChipI[mapNomber, i, j] == 1)
                 {
@@ -93,9 +112,9 @@ public class MapManege : MonoBehaviour {
     {
         do
         {
-            int x = Random.Range(0, mapChipI.GetLength(0));
-            int y = Random.Range(0, mapChipI.GetLength(1));
-            if (mapChipI[mapNomber, x, y] == 1)
+            int x = Random.Range(0, mapChipI.GetLength(1));
+            int y = Random.Range(0, mapChipI.GetLength(2));
+            if (aisle(x, y))
             {
                 stairs.transform.position = new Vector2(x, y);
                 ivent[x, y] = Instantiate(stairs);
@@ -112,9 +131,9 @@ public class MapManege : MonoBehaviour {
             {
                 do
                 {
-                    int x = Random.Range(0, mapChipI.GetLength(0));
-                    int y = Random.Range(0, mapChipI.GetLength(1));
-                    if (mapChipI[mapNomber, x, y] == 1)
+                    int x = Random.Range(0, mapChipI.GetLength(1));
+                    int y = Random.Range(0, mapChipI.GetLength(2));
+                    if (aisle(x, y))
                     {
                         Monster[i].transform.position = new Vector2(x, y);
                         ivent[x, y] = Instantiate(Monster[i]);
@@ -131,9 +150,9 @@ public class MapManege : MonoBehaviour {
         {
             do
             {
-                int x = Random.Range(0, mapChipI.GetLength(0));
-                int y = Random.Range(0, mapChipI.GetLength(1));
-                if (mapChipI[mapNomber, x, y] == 1)
+                int x = Random.Range(0, mapChipI.GetLength(1));
+                int y = Random.Range(0, mapChipI.GetLength(2));
+                if (aisle(x,y))
                 {
                     presentBox.transform.position = new Vector2(x, y);
                     ivent[x, y] = Instantiate(presentBox);
@@ -148,8 +167,8 @@ public class MapManege : MonoBehaviour {
         int y;
         do
         {
-            x = Random.Range(0, mapChipI.GetLength(0));
-            y = Random.Range(0, mapChipI.GetLength(1));
+            x = Random.Range(0, mapChipI.GetLength(1));
+            y = Random.Range(0, mapChipI.GetLength(2));
             if (mapChipI[mapNomber, x, y] == 1 && mapChipI[mapNomber, x - 1, y] == 1 && mapChipI[mapNomber, x, y - 1] == 1)
             {
                 player[0].transform.position = new Vector2(x, y);//１Pの位置
@@ -173,5 +192,11 @@ public class MapManege : MonoBehaviour {
             }
         }
         //1Pの近くに２P３P４P
+    }
+    bool aisle(int x,int y)
+    {
+        if (mapChipI[mapNomber, x, y] == 1&&(mapChipI[mapNomber, x+1, y] == 0||mapChipI[mapNomber, x-1, y] == 0)&& (mapChipI[mapNomber, x, y+1] == 0||mapChipI[mapNomber, x, y-1] == 0)&&ivent[x,y]==null)
+            return true;
+            return false;
     }
 }
