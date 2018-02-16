@@ -10,6 +10,13 @@ public class TitleSystem : MonoBehaviour
     public GameObject SINGLE; // Single
     public GameObject MULTI;  // Multi
 
+    Button Single;
+    Button Multi;
+
+    Button Easy;
+    Button Normal;
+    Button Hard;
+
     public GameObject EASY;   // 難易度
     public GameObject NORMAL; // 難易度
     public GameObject HARD;   // 難易度
@@ -17,24 +24,31 @@ public class TitleSystem : MonoBehaviour
     public bool mode = false;    // モード選択のトリガー
     public bool ReEnter = false; // ボタンを押してねを二回発生させないトリガー
     public bool difficulty_View = false; // 難易度選択のトリガー
-    public bool Back = false; // 戻るトリガー
+
+    public bool ModeBack = false;       // モード選択から戻るトリガー
+    public bool DifficultyBack = false; // 難易度選択から戻るトリガー
+
+    public bool SINGLE_SET = false; // シングルモードを選択した場合に渡す
+    public bool MULTI_SET = false;  // マルチモードを選択した場合に渡す
 
     private float NextTime;         // 文字点滅の奴に使ってるだけ
     private float interval = 0.8f;  // 周期
-    private float interval_button1; // prefab生成までの時間
+    private float interval_button; // ゲームモード選択ボタン出現までの時間
 
     public static int Difficulty; // 難易度の変数
-    public static int Member;     // プレイヤーの数
+    public static int Member;     // プレイヤーの変数
+
+    public int Select;
 
     // Use this for initialization
     void Start()
     {
-        // タイトルの文字の獲得と時間を測る場所
+        // タイトルの文字の獲得と時間を測る
 
         TextObject = GameObject.Find("Title");
 
         NextTime = Time.time;
-        
+
     }
 
     // Update is called once per frame
@@ -52,7 +66,7 @@ public class TitleSystem : MonoBehaviour
 
     public void TitleStart()
     {
-        if (Input.GetMouseButtonDown(0)&& ReEnter == false) // 何かのボタンを押したら
+        if (Input.GetButtonDown("enter")&& ReEnter == false) // 何かのボタンを押したら
         {
             TextObject.SetActive(false); // ボタンを押してね❤を非表示に
 
@@ -60,31 +74,76 @@ public class TitleSystem : MonoBehaviour
             ReEnter = true; // 再入力防止をtrueに
         }
 
-        if (Input.GetMouseButtonDown(1)&& Back == true)
+        // モード選択画面から戻る時
+        if (Input.GetButtonDown("back")&& ModeBack == true)
         {
-            Back = false;
-            difficulty_View = false;
+            ModeBack = false; // 戻るトリガーをfalseに
+            difficulty_View = false; // 難易度選択のトリガーをfalseに
 
-            EASY.SetActive(false);
-            NORMAL.SetActive(false);
+            // プレイモードの選択リセット
+            SINGLE_SET = false;
+            MULTI_SET = false;
+
+            // 非表示
+            EASY.SetActive(false);   
+            NORMAL.SetActive(false); 
             HARD.SetActive(false);
 
+            // 表示
             SINGLE.SetActive(true);
             MULTI.SetActive(true);
+
+            Single.Select();
+            Select = 0;
             
+        }
+
+        if (Input.GetButtonDown("back") && DifficultyBack == true)
+        {
+            ModeBack = true;        // 戻るトリガーをtrueに
+            DifficultyBack = false; // 戻るトリガーをfalseに
+            difficulty_View = true; // 難易度選択のトリガーをfalseに
+
+            Select = 0;
+
+            // 表示
+            EASY.SetActive(true);
+            NORMAL.SetActive(true);
+            HARD.SetActive(true);
+
+            // 非表示
+            SINGLE.SetActive(false);
+            MULTI.SetActive(false);
+
+
         }
 
         if (mode == true) // モード選択トリガーがtrueなら
         {
-            interval_button1 += Time.deltaTime; // 文字を表示するまでの時間を測る
+            interval_button += Time.deltaTime; // 文字を表示するまでの時間を測る
         }
 
-        if (interval_button1 > 1.5f) // 1.5秒経過したら
+        if (interval_button > 1.5f) // 1.5秒経過したら
         {
             SINGLE.SetActive(true); // シングルのボタンを表示
             MULTI.SetActive(true);  // マルチのボタンを表示
 
-            interval_button1 = 0.0f; // 1.5秒以上を経過してる限り表示されてしまうので0秒に変更
+            Single = GameObject.Find("Canvas/SINGLE").GetComponent<Button>();
+            Multi = GameObject.Find("Canvas/MULTI").GetComponent<Button>();
+
+            Single.Select();
+
+            if (Input.GetAxis("Horizontal") == 1)
+            {
+                Single.Select();
+            }
+
+            if (Input.GetAxis("Horizontal") == -1)
+            {
+                Multi.Select();
+            }
+
+            interval_button = 0.0f; // 1.5秒以上を経過してる限り表示されてしまうので0秒に変更
             mode = false;            // モード選択トリガーをfalseに
         }
     }
@@ -105,8 +164,9 @@ public class TitleSystem : MonoBehaviour
 
     public void SinglePlay()
     {
-        Member = 0;
-        Back = true;
+        Member = 0;              // 参加者の数
+        ModeBack = true;         // 選択ミス対処
+        SINGLE_SET = true;       // ゲームモードをシングルにセット
         difficulty_View = true;  // 難易度選択トリガーをtrueに
         SINGLE.SetActive(false); // SINGLEボタンを非表示
         MULTI.SetActive(false);  // MULTIボタンを非表示
@@ -116,7 +176,11 @@ public class TitleSystem : MonoBehaviour
 
     public void MultiPlay()
     {
-        //SceneManager.LoadScene("MultiSetting"); // マルチプレイ参加画面へ移動
+        MULTI_SET = true;        //ゲームモードをマルチにセット
+        ModeBack = true;         // 選択ミス対処
+        difficulty_View = true;  // 難易度選択トリガーをtrueに
+        SINGLE.SetActive(false); // SINGLEボタンを非表示
+        MULTI.SetActive(false);  // MULTIボタンを非表示
     }
 
     public void difficulty_set() // Update参照
@@ -124,20 +188,81 @@ public class TitleSystem : MonoBehaviour
         EASY.SetActive(true);   //EASYボタンを表示
         NORMAL.SetActive(true); //NORMALボタンを表示
         HARD.SetActive(true);   //HARDボタンを表示
+
+        Easy = GameObject.Find("Canvas/EASY").GetComponent<Button>();
+        Normal = GameObject.Find("Canvas/NORMAL").GetComponent<Button>();
+        Hard = GameObject.Find("Canvas/HARD").GetComponent<Button>();
+
+        if (Input.GetAxis("Vertical") == -1)
+        {
+            Select = 1;
+        }
+
+        if (Select == 0)
+        {
+            Easy.Select();
+        }
     }
 
     public void EASYMODE()
     {
         Difficulty = 0; // 0を送る
+
+        //非表示
+        EASY.SetActive(false);
+        NORMAL.SetActive(false);
+        HARD.SetActive(false);
+
+        ModeBack = false;
+        DifficultyBack = true;
+
+        difficulty_View = false;
+
+        if (MULTI_SET == true)
+        {
+            // SceneManager.LoadScene("MultiSetting"); // マルチプレイ参加画面へ移動
+        }
     }
 
     public void NORMALMODE()
     {
         Difficulty = 1; // 1を送る
+
+        //非表示
+        EASY.SetActive(false);
+        NORMAL.SetActive(false);
+        HARD.SetActive(false);
+
+        ModeBack = false;
+        DifficultyBack = true;
+
+        difficulty_View = false;
+
+
+        if (MULTI_SET == true)
+        {
+            // SceneManager.LoadScene("MultiSetting");// マルチプレイ参加画面へ移動
+        }
     }
 
     public void HARDMODE()
     {
         Difficulty = 2; // 2を送る
+
+        //非表示
+        EASY.SetActive(false);
+        NORMAL.SetActive(false);
+        HARD.SetActive(false);
+
+        ModeBack = false;
+        DifficultyBack = true;
+
+        difficulty_View = false;
+
+        if (MULTI_SET == true)
+        {
+            // SceneManager.LoadScene("MultiSetting"); // マルチプレイ参加画面へ移動
+        }
     }
+
 }
