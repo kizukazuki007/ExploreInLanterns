@@ -35,8 +35,8 @@ public class TitleSystem : MonoBehaviour
     private float interval = 0.8f;  // 周期
     private float interval_button; // ゲームモード選択ボタン出現までの時間
 
-    public static int Difficulty; // 難易度の変数
-    public static int Member;     // プレイヤーの変数
+    public  int Difficulty; // 難易度の変数
+    public  int Member;     // プレイヤーの変数
 
     public int Select;
 
