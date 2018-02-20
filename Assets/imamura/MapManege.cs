@@ -161,12 +161,12 @@ public class MapManege : MonoBehaviour {
         AllDestroy();
         AllCreate();
     }
-    public void MonsterDestroy() { }//   モンスターが死んだときに呼び出すもの
+
     public void MonsterDedCreate()
     {
         int x = Random.Range(0, mapChipI.GetLength(1));
         int y = Random.Range(0, mapChipI.GetLength(2));
-    }
+    }//   モンスターが死んだときに呼び出すもの
 
 
     void AllCreate()     //最初と階段を上った時に呼び出す。
