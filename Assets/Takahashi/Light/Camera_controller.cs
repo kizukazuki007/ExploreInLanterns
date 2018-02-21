@@ -5,8 +5,10 @@ public class Camera_controller : MonoBehaviour {
 
     [SerializeField,Tooltip("player")]
     GameObject[] players;
+
     [SerializeField, Tooltip("playerのオイル量")]
     float[] player_oil;
+
     [SerializeField, Tooltip("スピード")]
     float speed;
 
@@ -26,6 +28,7 @@ public class Camera_controller : MonoBehaviour {
 	void Update ()
     {
 
+        //マルチモード　カメラのターゲット変更
         if (multi)
         {
             Target();    
