@@ -5,8 +5,12 @@ public class Camera_controller : MonoBehaviour {
 
     [SerializeField,Tooltip("player")]
     GameObject[] players;
+
     [SerializeField, Tooltip("playerのオイル量")]
     float[] player_oil;
+
+    [SerializeField, Tooltip("スピード")]
+    float speed;
 
     GameObject target_player,target_storage;
     new Vector3 Pos;
@@ -23,6 +27,8 @@ public class Camera_controller : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+
+        //マルチモード　カメラのターゲット変更
         if (multi)
         {
             Target();    
@@ -31,14 +37,9 @@ public class Camera_controller : MonoBehaviour {
         //ぬるぬる動く
         Pos = target_player.transform.position - transform.position;
         Pos.z = 0.0f;
-        transform.position += Pos * Time.deltaTime;
-
-        //かくかく動く
-        /*
-        Pos = target_player.transform.position;
-        Pos.z = z;
-        transform.position = Pos;
-        */
+        transform.position += Pos * Time.deltaTime * speed;
+        
+        
     }
 
     void Target()
@@ -54,7 +55,5 @@ public class Camera_controller : MonoBehaviour {
             }
         }
         target_player = target_storage;
-        
-
     }
 }
