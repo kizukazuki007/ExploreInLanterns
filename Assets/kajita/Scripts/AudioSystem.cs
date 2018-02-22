@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class AudioSystem : MonoBehaviour {
-    public AudioClip audioClip1;
+    public AudioClip TitleBGM;
     public AudioClip audioClip2;
     public AudioClip audioClip3;
     private AudioSource audioSource;
@@ -11,7 +11,7 @@ public class AudioSystem : MonoBehaviour {
     // Use this for initialization
     void Start () {
         audioSource = gameObject.GetComponent<AudioSource>();
-        audioSource.clip = audioClip1;
+        audioSource.clip = TitleBGM;
         audioSource.Play();
 
     }
