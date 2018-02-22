@@ -5,17 +5,11 @@ using System.Collections;
 
 public class TitleSystem : MonoBehaviour
 {
-    // ゲームオブジェクト
     public GameObject TextObject; //点滅させる文字
 
     public GameObject SINGLE; // Single
     public GameObject MULTI;  // Multi
 
-    public GameObject EASY;   // 難易度
-    public GameObject NORMAL; // 難易度
-    public GameObject HARD;   // 難易度
-
-    // ボタン
     Button Single;
     Button Multi;
 
@@ -23,7 +17,10 @@ public class TitleSystem : MonoBehaviour
     Button Normal;
     Button Hard;
 
-    // トリガー
+    public GameObject EASY;   // 難易度
+    public GameObject NORMAL; // 難易度
+    public GameObject HARD;   // 難易度
+
     public bool mode = false;    // モード選択のトリガー
     public bool ReEnter = false; // ボタンを押してねを二回発生させないトリガー
     public bool difficulty_View = false; // 難易度選択のトリガー
@@ -34,7 +31,6 @@ public class TitleSystem : MonoBehaviour
     public bool SINGLE_SET = false; // シングルモードを選択した場合に渡す
     public bool MULTI_SET = false;  // マルチモードを選択した場合に渡す
 
-    // 変数
     private float NextTime;         // 文字点滅の奴に使ってるだけ
     private float interval = 0.8f;  // 周期
     private float interval_button; // ゲームモード選択ボタン出現までの時間
@@ -44,16 +40,9 @@ public class TitleSystem : MonoBehaviour
 
     public int Select;
 
-    // SE
-    public AudioClip Decision_SE;
-    public AudioClip Cancel_SE;
-    private AudioSource audioSource;
-
     // Use this for initialization
     void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
-
         // タイトルの文字の獲得と時間を測る
 
         TextObject = GameObject.Find("Title");
@@ -83,9 +72,6 @@ public class TitleSystem : MonoBehaviour
 
             mode = true;    // モード選択のトリガーをtrueに
             ReEnter = true; // 再入力防止をtrueに
-
-            audioSource.clip = Decision_SE;
-            audioSource.Play();
         }
 
         // モード選択画面から戻る時
@@ -109,10 +95,7 @@ public class TitleSystem : MonoBehaviour
 
             Single.Select();
             Select = 0;
-
-            audioSource.clip = Cancel_SE;
-            audioSource.Play();
-
+            
         }
 
         if (Input.GetButtonDown("back") && DifficultyBack == true)
@@ -131,9 +114,6 @@ public class TitleSystem : MonoBehaviour
             // 非表示
             SINGLE.SetActive(false);
             MULTI.SetActive(false);
-
-            audioSource.clip = Cancel_SE;
-            audioSource.Play();
 
 
         }
@@ -191,9 +171,7 @@ public class TitleSystem : MonoBehaviour
         SINGLE.SetActive(false); // SINGLEボタンを非表示
         MULTI.SetActive(false);  // MULTIボタンを非表示
 
-        audioSource.clip = Decision_SE;
-        audioSource.Play();
-
+        
     }
 
     public void MultiPlay()
@@ -203,14 +181,10 @@ public class TitleSystem : MonoBehaviour
         difficulty_View = true;  // 難易度選択トリガーをtrueに
         SINGLE.SetActive(false); // SINGLEボタンを非表示
         MULTI.SetActive(false);  // MULTIボタンを非表示
-
-        audioSource.clip = Decision_SE;
-        audioSource.Play();
     }
 
     public void difficulty_set() // Update参照
     {
-
         EASY.SetActive(true);   //EASYボタンを表示
         NORMAL.SetActive(true); //NORMALボタンを表示
         HARD.SetActive(true);   //HARDボタンを表示
@@ -227,16 +201,11 @@ public class TitleSystem : MonoBehaviour
         if (Select == 0)
         {
             Easy.Select();
-
         }
-
     }
 
     public void EASYMODE()
     {
-        audioSource.clip = Decision_SE;
-        audioSource.Play();
-
         Difficulty = 0; // 0を送る
 
         //非表示
@@ -257,9 +226,6 @@ public class TitleSystem : MonoBehaviour
 
     public void NORMALMODE()
     {
-        audioSource.clip = Decision_SE;
-        audioSource.Play();
-
         Difficulty = 1; // 1を送る
 
         //非表示
@@ -281,9 +247,6 @@ public class TitleSystem : MonoBehaviour
 
     public void HARDMODE()
     {
-        audioSource.clip = Decision_SE;
-        audioSource.Play();
-
         Difficulty = 2; // 2を送る
 
         //非表示
