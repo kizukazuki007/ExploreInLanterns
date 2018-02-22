@@ -5,6 +5,7 @@ public class Light_Controller : MonoBehaviour {
 
     //[SerializeField, Tooltip("プレイヤー")]
     //GameObject player;
+
     [SerializeField, Tooltip("Light_GameObject")]
     GameObject[] Light = new GameObject[2];
 
