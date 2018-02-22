@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 7d185ee16c5a30a448b515dd1c02a7a1
-timeCreated: 1518488297
+timeCreated: 1519263504
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: "\u5B9D\u73893_0"
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +31,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,7 +39,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +50,69 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: "\u5B9D\u73893_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -49, y: 84}
+        - {x: -81, y: 75}
+        - {x: -81, y: -72}
+        - {x: -49, y: -87}
+        - {x: -19, y: -90}
+        - {x: -16, y: -90}
+        - {x: -15, y: -87}
+        - {x: -15, y: -54}
+        - {x: -17, y: -52}
+        - {x: -19, y: -34}
+        - {x: -12, y: -65}
+        - {x: -12, y: -78}
+        - {x: -6, y: -90}
+        - {x: 30, y: -90}
+        - {x: 83, y: -53}
+        - {x: 83, y: 54}
+        - {x: 35, y: 84}
+      - - {x: 70, y: -54}
+        - {x: 16, y: -54}
+        - {x: 16, y: -90}
+        - {x: 29, y: -90}
+        - {x: 38, y: -88}
+        - {x: 71, y: -63}
+        - {x: 72, y: -60}
+        - {x: 72, y: -55}
+      - - {x: 80, y: 28}
+        - {x: 51, y: -4}
+        - {x: 51, y: -11}
+        - {x: 77, y: -36}
+        - {x: 88, y: -36}
+        - {x: 91, y: -25}
+        - {x: 91, y: 21}
+        - {x: 87, y: 28}
+      - - {x: -85, y: 26}
+        - {x: -88, y: 14}
+        - {x: -88, y: -23}
+        - {x: -84, y: -32}
+        - {x: -81, y: -32}
+        - {x: -52, y: -3}
+        - {x: -52, y: -2}
+        - {x: -80, y: 26}
+      - - {x: -38, y: 85}
+        - {x: -71, y: 57}
+        - {x: -71, y: 46}
+        - {x: -15, y: 46}
+        - {x: -15, y: 85}
+      - - {x: 15, y: 85}
+        - {x: 15, y: 46}
+        - {x: 74, y: 46}
+        - {x: 74, y: 59}
+        - {x: 34, y: 85}
     outline: []
   spritePackingTag: 
   userData: 
