@@ -9,6 +9,8 @@ public class Event_cs : MonoBehaviour {
     SpriteRenderer MainspriteRender;
     public Sprite BoxOpen;
 
+    public Sprite wanaWorking;
+
     public bool openflg = false;
 
     [SerializeField,Tooltip("乱数")]
@@ -34,15 +36,32 @@ public class Event_cs : MonoBehaviour {
 
     GameObject oill;
 
+    GameObject hougyoukudesu;
+
+    GameObject trap_Im;
+
+    public GameObject move;
     int yumiya = 0; //弓矢の本数 
 
     [SerializeField]
-    int max = 0;
+    int max = 10;
 
 
     int save; //ランダム保存用
 
     int save2;   //ランダム(宝玉)保存用
+
+    player_move man;
+
+    public int score=0;
+
+    public int score1=10; //宝玉３用
+
+    public int score2 = 100; //２宝玉用
+
+    public int score3=1; //火竜の宝玉用  
+
+    stautascontolloer ya;
 
 
     // Use this for initialization
@@ -59,7 +78,13 @@ public class Event_cs : MonoBehaviour {
 
         yapre = (GameObject)Resources.Load("ya");
 
-        oill = (GameObject)Resources.Load("oil");
+        oill = (GameObject)Resources.Load("oil1");
+
+        trap_Im = (GameObject)Resources.Load("wana");
+
+        man= GameObject.Find("player").GetComponent<player_move>();
+
+         ya = GameObject.Find("statusContolloer").GetComponent<stautascontolloer>();
 
 
     }
@@ -85,7 +110,7 @@ public class Event_cs : MonoBehaviour {
     {
         print("階段");
 
-        MapManege move = GetComponent<MapManege>();
+        MapManege move =GameObject.Find("MapManege").GetComponent<MapManege>();
         move.StairsUP();
     }
 
@@ -112,6 +137,7 @@ public class Event_cs : MonoBehaviour {
                 yapre.transform.position = pos;//new Vector3(pos.x, pos.y, 0);
                 Instantiate(yapre);
                 seisei = false;
+                
             }
         }
 
@@ -130,6 +156,7 @@ public class Event_cs : MonoBehaviour {
                     hougyo3.transform.position = pos;// new Vector3(pos.x, pos.y, 0);
                     Instantiate(hougyo3);
                     seisei = false;
+                    hougyoukudesu = GameObject.Find("宝玉3(Clone)");
                 }
 
                 else if (hougyouku>=80) //宝玉２生成　20%
@@ -138,6 +165,7 @@ public class Event_cs : MonoBehaviour {
                     hougyo2.transform.position = pos;//new Vector3(pos.x, pos.y, 0);
                     Instantiate(hougyo2);
                     seisei = false;
+                    hougyoukudesu = GameObject.Find("２宝玉(Clone)");
 
                 }
                 else //それ以外
@@ -146,6 +174,7 @@ public class Event_cs : MonoBehaviour {
                     hougyo.transform.position = pos; // new Vector3(pos.x, pos.y, 0);
                     Instantiate(hougyo);
                     seisei = false;
+                    hougyoukudesu = GameObject.Find("火竜(Clone)");
 
                 }
 
@@ -176,19 +205,58 @@ public class Event_cs : MonoBehaviour {
         if (save<=20) //矢
         {
             int yuram = Random.Range(1, 4);
-
-            if (yumiya <= max)
+            if (ya.number[0] > max)
             {
-                yumiya = yumiya + yuram;
-
-                if (yumiya > max)
-                {
-                    yumiya = max;
-                }
-                
+                ya.number[0] = max;
             }
-            print(yumiya);
 
+            ya.number[0] += yuram;
+          
+
+            Destroy(GameObject.Find("ya(Clone)"));
+
+        }
+
+        if (range > 60) //スコア関連
+        {
+            if (save2 <= 20) ya.score += score1;
+
+            else if (save2 >= 80) ya.score += score2;
+
+            else ya.score += score3;
+            
+            Destroy(hougyoukudesu);
+        }
+
+        else
+        {
+            float plus=0.0f;
+            int oil = Random.Range(0, 100);
+            if (oil >= 30)
+            {
+                plus = 15.0f;
+            }
+
+            else if (oil >= 60)
+            {
+                plus = 30.0f;
+            }
+
+            if (oil >= 61)
+            {
+                plus = 60.0f;
+            }
+            else if (oil >= 90)
+            {
+                plus = 100.0f;
+            }
+            else
+            {
+                plus = 180.0f;
+            }
+            
+            //player.GetComponent<Oil_Controller>().Set_Oil(plus);
+            Destroy(GameObject.Find("oil1(Clone)"));
         }
         
 
@@ -196,17 +264,16 @@ public class Event_cs : MonoBehaviour {
 
     public void trap()
     {
-       
-        player_move man = GameObject.Find("地面_s").GetComponent<player_move>();
+        MainspriteRender.sprite = wanaWorking;
         man.GetComponent<player_move>().enabled = false;
-
-        
-      
-        
-     
+        Invoke("trapClear", 4.0f);
     }
    
-
+    public void trapClear()
+    {
+        man.GetComponent<player_move>().enabled = true;
+        Destroy(GameObject.Find("wana(Clone)"));
+    }
    
     
     
