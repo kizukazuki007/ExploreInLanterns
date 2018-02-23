@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MapManege : MonoBehaviour {
-    public GameObject []Monster;//unityでアタッチして
+    public GameObject []Monster;//unityでアタッチして              //iventとしてまとめたほうがよかった。
     public int[] MonsterCount;//どのモンスター[]を何引き出すか
     public GameObject presentBox;//プレゼント
     public int presentBoxCount;//宝箱を何個出すか
@@ -18,12 +18,14 @@ public class MapManege : MonoBehaviour {
 
     int mapNomber;
     int mapOldNomber=-1;
-
-    //一時的に書いておく
+    
     public int playerCount;     //タイトルで設定した数字をここにいれる
     public GameObject []player;//プレーヤ―
     public GameObject nullObject;
 
+    public int Floor = 1;
+
+    
     int[,,] mapChipI = {
         {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -137,6 +139,18 @@ public class MapManege : MonoBehaviour {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         }
     };
+    public void StairsUP()//階段を上がった時。               
+    {
+        Floor++;
+        AllDestroy();
+        AllCreate();
+    }
+
+    public void MonsterDedCreate()//   モンスターが死んだときに呼び出すもの
+    {
+        MonsterCreate();
+    }
+
     void Start()//最初作るとき
     {
         for (int i = 0; i < ivent.GetLength(0); i++)
@@ -149,25 +163,13 @@ public class MapManege : MonoBehaviour {
         AllCreate();
         StairsUP();
     }
-    void Update()
+    void Update()//でバック用
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
             StairsUP();
         }
     }
-    public void StairsUP()//階段を上がった時。               他の人が呼び出すのはここだけ
-    {
-        AllDestroy();
-        AllCreate();
-    }
-
-    public void MonsterDedCreate()
-    {
-        int x = Random.Range(0, mapChipI.GetLength(1));
-        int y = Random.Range(0, mapChipI.GetLength(2));
-    }//   モンスターが死んだときに呼び出すもの
-
 
     void AllCreate()     //最初と階段を上った時に呼び出す。
     {
