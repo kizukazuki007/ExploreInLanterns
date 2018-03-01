@@ -22,7 +22,7 @@ public class Camera_controller : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-
+        Start_Camera(players, 4);
 	}
 	
 	// Update is called once per frame
@@ -62,6 +62,7 @@ public class Camera_controller : MonoBehaviour {
     public void Start_Camera(GameObject [] player ,int PNum)
     {
         players = new GameObject[PNum];
+        player_oil = new float[PNum];
         for (int i = 0;i < PNum; i++)
         {
             players[i] = player[i];
