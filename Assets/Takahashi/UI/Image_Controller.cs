@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class Image_Controller : MonoBehaviour {
 
     //プレイヤー(プレハブ)につける
-
     [SerializeField, Tooltip("player")]
     GameObject Player;
 
