@@ -5,14 +5,14 @@ using System.Collections;
 
 public class TitleSystem : MonoBehaviour
 {
-    public GameObject TextObject; //点滅させる文字
-
     public GameObject SINGLE; // Single
     public GameObject MULTI;  // Multi
 
     public GameObject EASY;   // 難易度
     public GameObject NORMAL; // 難易度
     public GameObject HARD;   // 難易度
+
+    public GameObject READY;
 
     Button Single;
     Button Multi;
@@ -31,12 +31,14 @@ public class TitleSystem : MonoBehaviour
     public bool SINGLE_SET = false; // シングルモードを選択した場合に渡す
     public bool MULTI_SET = false;  // マルチモードを選択した場合に渡す
 
-    private float NextTime;         // 文字点滅の奴に使ってるだけ
-    private float interval = 0.8f;  // 周期
-    private float interval_button; // ゲームモード選択ボタン出現までの時間
+    public bool test = false;
 
+    private float interval_button; // ゲームモード選択ボタン出現までの時間
+    private float ready_time;
+
+    static int Member;
+    public int gamemode;
     static int Difficulty; // 難易度の変数
-    static int Member;     // プレイヤーの変数
 
     public int Select;
 
@@ -52,30 +54,47 @@ public class TitleSystem : MonoBehaviour
 
         // タイトルの文字の獲得と時間を測る
 
-        TextObject = GameObject.Find("Title");
-
-        NextTime = Time.time;
-
     }
 
     // Update is called once per frame
     void Update()
     {
         TitleStart();    // ボタンを押してね❤からゲームモード選択まで
-        interval_Text(); // 文字の点滅
 
         if (difficulty_View == true) // 難易度選択のトリガーがtrueなら
         {
             difficulty_set(); // 難易度を選択
         }
 
+        if (test == true)
+        {
+            ready_time += Time.deltaTime;
+
+            if (test == false)
+            {
+                ready_time = 0;
+            }
+
+            if (Input.GetButtonDown("Decision") && gamemode == 0 && ready_time > 1.0f)
+            {
+                ready_time = 0;
+                SceneManager.LoadScene("proto");
+            }
+
+            else if (Input.GetButtonDown("Decision") && gamemode == 1 && ready_time > 1.0f)
+            {
+                ready_time = 0;
+                SceneManager.LoadScene("MultiSetting");
+            }
+        }
+
     }
 
     public void TitleStart()
     {
-        if (Input.GetButtonDown("enter")&& ReEnter == false) // 何かのボタンを押したら
+        if (Input.GetButtonDown("Decision") && ReEnter == false) // 何かのボタンを押したら
         {
-            TextObject.SetActive(false); // ボタンを押してね❤を非表示に
+            TextSystem.TextObject.SetActive(false);
 
             mode = true;    // モード選択のトリガーをtrueに
             ReEnter = true; // 再入力防止をtrueに
@@ -85,7 +104,7 @@ public class TitleSystem : MonoBehaviour
         }
 
         // モード選択画面から戻る時
-        if (Input.GetButtonDown("back")&& ModeBack == true)
+        if (Input.GetButtonDown("Cancel")&& ModeBack == true)
         {
             ModeBack = false; // 戻るトリガーをfalseに
             difficulty_View = false; // 難易度選択のトリガーをfalseに
@@ -111,7 +130,7 @@ public class TitleSystem : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("back") && DifficultyBack == true)
+        if (Input.GetButtonDown("Cancel") && DifficultyBack == true)
         {
             ModeBack = true;        // 戻るトリガーをtrueに
             DifficultyBack = false; // 戻るトリガーをfalseに
@@ -127,6 +146,10 @@ public class TitleSystem : MonoBehaviour
             // 非表示
             SINGLE.SetActive(false);
             MULTI.SetActive(false);
+
+            READY.SetActive(false);
+
+            test = false;
 
             audioSource.clip = cancel;
             audioSource.Play();
@@ -162,23 +185,9 @@ public class TitleSystem : MonoBehaviour
         }
     }
 
-    public void interval_Text()
-    {
-        if (Time.time > NextTime)
-        {
-            float alpha = TextObject.GetComponent<CanvasRenderer>().GetAlpha();
-            if (alpha == 1.0f)
-                TextObject.GetComponent<CanvasRenderer>().SetAlpha(0.0f);
-            else
-                TextObject.GetComponent<CanvasRenderer>().SetAlpha(1.0f);
-
-            NextTime += interval;
-        }
-    }
 
     public void SinglePlay()
     {
-        Member = 0;              // 参加者の数
         ModeBack = true;         // 選択ミス対処
         SINGLE_SET = true;       // ゲームモードをシングルにセット
         difficulty_View = true;  // 難易度選択トリガーをtrueに
@@ -187,6 +196,8 @@ public class TitleSystem : MonoBehaviour
 
         audioSource.clip = ok;
         audioSource.Play();
+
+        gamemode = 0;
 
     }
 
@@ -200,6 +211,8 @@ public class TitleSystem : MonoBehaviour
 
         audioSource.clip = ok;
         audioSource.Play();
+
+        gamemode = 1;
     }
 
     public void difficulty_set() // Update参照
@@ -244,6 +257,8 @@ public class TitleSystem : MonoBehaviour
 
         audioSource.clip = ok;
         audioSource.Play();
+
+        SET_READY();
     }
 
     public void NORMALMODE()
@@ -268,6 +283,8 @@ public class TitleSystem : MonoBehaviour
 
         audioSource.clip = ok;
         audioSource.Play();
+
+        SET_READY();
     }
 
     public void HARDMODE()
@@ -291,11 +308,9 @@ public class TitleSystem : MonoBehaviour
 
         audioSource.clip = ok;
         audioSource.Play();
-    }
 
-    public static int Get_Member()
-    {
-        return Member;
+        SET_READY();
+
     }
 
     public static int Get_Difficulty()
@@ -303,4 +318,16 @@ public class TitleSystem : MonoBehaviour
         return Difficulty;
     }
 
+    public static int Get_Member()
+    {
+        return Member;
+    }
+
+    public void SET_READY()
+    {
+        READY.SetActive(true);
+
+        test = true;
+    }
 }
+
