@@ -24,8 +24,8 @@ public class Oil_Controller : MonoBehaviour {
     {
         Oil -= Time.deltaTime;
         Oil = Mathf.Max(Oil, 0.0f);
-
-        Light.GetComponent<Light_Controller>().set_Oil(Oil);
+        
+        //Light.GetComponent<Light_Controller>().set_Oil(Oil);
 	}
 
 

@@ -12,16 +12,17 @@ public class Camera_controller : MonoBehaviour {
     [SerializeField, Tooltip("スピード")]
     float speed;
 
+    [SerializeField,Tooltip("マルチかどうか")]
+    bool multi = false;
+
     GameObject target_player,target_storage;
     new Vector3 Pos;
-    bool multi = false;
     float z;
     
 	// Use this for initialization
 	void Start ()
     {
-        target_player = players[0];
-        z = transform.position.z;
+        Start_Camera(players, 4);
 	}
 	
 	// Update is called once per frame
@@ -45,7 +46,7 @@ public class Camera_controller : MonoBehaviour {
     void Target()
     {
         float oil_max = 0;
-        for(int i = 0;players[i] != null; i++)
+        for(int i = 0;i < players.Length; i++)
         {
             player_oil[i] = players[i].GetComponent<Oil_Controller>().Get_Oil();
             if (oil_max < player_oil[i])
@@ -56,4 +57,25 @@ public class Camera_controller : MonoBehaviour {
         }
         target_player = target_storage;
     }
+
+    //Map生成時に呼ぶ
+    public void Start_Camera(GameObject [] player ,int PNum)
+    {
+        players = new GameObject[PNum];
+        player_oil = new float[PNum];
+        for (int i = 0;i < PNum; i++)
+        {
+            players[i] = player[i];
+        }
+
+        if(PNum == 1)
+        {
+            multi = false;
+        }
+
+        target_player = players[0];
+        z = transform.position.z;
+
+    }
+    
 }
