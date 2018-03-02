@@ -54,7 +54,7 @@ public class UI_Controller : MonoBehaviour {
     public void Set_Score(int plus)
     {
         score += plus;
-        Score_Text.text = score.ToString("D6");
+        Score_Text.text = "Score:" + score.ToString("D6");
     }
 
     //リザルト用
