@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MapManege : MonoBehaviour {
-    public GameObject []Monster;//unityでアタッチして              //iventとしてまとめたほうがよかった。
+public class MapManege : MonoBehaviour
+{
+    public GameObject[] Monster;//unityでアタッチして              //iventとしてまとめたほうがよかった。
     public int[] MonsterCount;//どのモンスター[]を何引き出すか                    難易度によって数字を変える。（時間があれば）
     public int distance;
     public GameObject presentBox;//プレゼント
@@ -11,22 +12,22 @@ public class MapManege : MonoBehaviour {
     public int trapCount;
 
     public GameObject stairs;//強制１個
-                                        //iventのゲームオブジェクトをすべて一つの変数にまとめてしまえば一発でできる？←要検討
+                             //iventのゲームオブジェクトをすべて一つの変数にまとめてしまえば一発でできる？←要検討
     public GameObject wall;
     public GameObject ground;
     public GameObject black;
     public Camera camera;
 
-    GameObject[,] mapChipG=new GameObject [35,57];
+    GameObject[,] mapChipG = new GameObject[35, 57];
     GameObject[,] ivent = new GameObject[35, 57];
 
     public int mapNomber;
-    int mapOldNomber=-1;
-    
+    int mapOldNomber = -1;
+
     public int playerCount;     //タイトルで設定した数字をここにいれる                    カメラの呼び出しをするその時に、人数とプレーヤー変数を入れる
-    public GameObject []pGObgect;//プレーヤ―のゲームオブジェクトの素材
+    public GameObject[] pGObgect;//プレーヤ―のゲームオブジェクトの素材
     public GameObject nullObject;//ごり押し処理用
-    public GameObject []getPlayer=new GameObject[4];      //他の人が使うよう
+    public GameObject[] getPlayer = new GameObject[4];      //他の人が使うよう
     public static int Floor;//他の人　階層
 
     //[SerializeField]      
@@ -161,7 +162,7 @@ public class MapManege : MonoBehaviour {
         {
             for (int j = 0; j < ivent.GetLength(1); j++)
             {
-                    ivent[i, j] = nullObject;
+                ivent[i, j] = nullObject;
             }
         }
         AllCreate();
@@ -199,7 +200,7 @@ public class MapManege : MonoBehaviour {
                 if (mapChipG[i, j] != null)
                 {
                     Destroy(mapChipG[i, j]);
-                    mapChipG[i, j]= null;
+                    mapChipG[i, j] = null;
                 }
             }
         }
@@ -227,19 +228,34 @@ public class MapManege : MonoBehaviour {
                     ground.transform.position = new Vector2(i, j);
                     mapChipG[i, j] = Instantiate(ground);
                 }
-                else if (j - 1 != -1 && mapChipI[mapNomber, i, j - 1] == 1)
-                {
-                    wall.transform.position = new Vector2(i, j);
-                    mapChipG[i, j] = Instantiate(wall);
-                }
+                //else if (j - 1 != -1 && mapChipI[mapNomber, i, j - 1] == 1)
+                //{
+                //    wall.transform.position = new Vector2(i, j);
+                //    mapChipG[i, j] = Instantiate(wall);
+                //}
+                //else if (j + 1 != mapChipI.GetLength(2) && mapChipI[mapNomber, i, j + 1] == 1)
+                //{
+                //    wall.transform.position = new Vector2(i, j);
+                //    mapChipG[i, j] = Instantiate(wall);
+                //}
+                //else if (i - 1 != -1 && mapChipI[mapNomber, i - 1, j] == 1)
+                //{
+                //    wall.transform.position = new Vector2(i, j);
+                //    mapChipG[i, j] = Instantiate(wall);
+                //}
+                //else if (i + 1 != mapChipI.GetLength(1) && mapChipI[mapNomber, i + 1, j] == 1)
+                //{
+                //    wall.transform.position = new Vector2(i, j);
+                //    mapChipG[i, j] = Instantiate(wall);
+                //}
                 else
                 {
-                    black.transform.position = new Vector2(i, j);
-                    mapChipG[i, j] = Instantiate(black);
+                    nullObject.transform.position = new Vector2(i, j);
+                    mapChipG[i, j] = Instantiate(nullObject);
                 }
             }
         }
-    }
+    }       //最初の重さの原因？コメントアウト外すと優しくなるかも？
     void StairsCreate()
     {
         do
@@ -250,7 +266,7 @@ public class MapManege : MonoBehaviour {
             {
                 stairs.transform.position = new Vector2(x, y);
                 ivent[x, y] = Instantiate(stairs);
-        //        mapChipI[mapNomber, x, y] = 0;
+                //        mapChipI[mapNomber, x, y] = 0;
                 break;
             }
         } while (true);
@@ -283,7 +299,7 @@ public class MapManege : MonoBehaviour {
             {
                 int x = Random.Range(0, mapChipI.GetLength(1));
                 int y = Random.Range(0, mapChipI.GetLength(2));
-                if (aisleTrue(x,y))
+                if (aisleTrue(x, y))
                 {
                     presentBox.transform.position = new Vector2(x, y);
                     ivent[x, y] = Instantiate(presentBox);
@@ -321,32 +337,32 @@ public class MapManege : MonoBehaviour {
             {
                 pGObgect[0].transform.position = new Vector2(x, y);//１Pの位置
                 ivent[x, y] = Instantiate(pGObgect[0]);
-                camera.transform.position = new Vector3(x, y,camera.transform.position.z);
+                camera.transform.position = new Vector3(x, y, camera.transform.position.z);
                 getPlayer[0] = ivent[x, y];
                 break;
             }
         } while (true);
         if (playerCount >= 2)
         {
-            pGObgect[1].transform.position = new Vector2(x-1, y);
+            pGObgect[1].transform.position = new Vector2(x - 1, y);
             ivent[x - 1, y] = Instantiate(pGObgect[1]);
             getPlayer[1] = ivent[x - 1, y];
             if (playerCount >= 3)
             {
                 pGObgect[2].transform.position = new Vector2(x, y - 1);
                 ivent[x, y - 1] = Instantiate(pGObgect[2]);
-                getPlayer[2] = ivent[x, y-1];
+                getPlayer[2] = ivent[x, y - 1];
                 if (playerCount >= 4)
                 {
                     pGObgect[3].transform.position = new Vector2(x - 1, y - 1);
                     ivent[x - 1, y - 1] = Instantiate(pGObgect[3]);
-                    getPlayer[3] = ivent[x-1, y - 1];
+                    getPlayer[3] = ivent[x - 1, y - 1];
                 }
             }
         }
         //1Pの近くに２P３P４P
     }
-    bool aisleTrue(int x,int y)
+    bool aisleTrue(int x, int y)
     {
         if (mapChipI[mapNomber, x, y] == 1 && (mapChipI[mapNomber, x + 1, y] == 1 || mapChipI[mapNomber, x - 1, y] == 1) && (mapChipI[mapNomber, x, y + 1] == 1 || mapChipI[mapNomber, x, y - 1] == 1) && ivent[x, y] == nullObject)
         {
