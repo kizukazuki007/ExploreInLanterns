@@ -30,8 +30,6 @@ public class UI_Controller : MonoBehaviour {
     {
         //スコア初期化
         score = 0;
-
-        Invoke("score_a", 5);
 	}
 	
 	// Update is called once per frame
@@ -88,9 +86,5 @@ public class UI_Controller : MonoBehaviour {
         {
             players_Contents[i].GetComponent<Image_Controller>().Set_Player(player[i]);
         }
-    }
-    void score_a()
-    {
-        Set_Score(10);
     }
 }

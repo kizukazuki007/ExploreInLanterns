@@ -22,7 +22,7 @@ public class Camera_controller : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        Start_Camera(players, 4);
+
 	}
 	
 	// Update is called once per frame

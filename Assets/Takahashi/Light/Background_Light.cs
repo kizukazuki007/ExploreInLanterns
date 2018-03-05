@@ -3,12 +3,11 @@ using System.Collections;
 
 public class Background_Light : MonoBehaviour {
 
-    [SerializeField]
-    GameObject[] players;
+    GameObject[] players = new GameObject[4];
 
     [SerializeField]
     int PNum;
-
+    
     bool cange;
     float distance, lightpower, lpower_total;
     int px, py;
@@ -16,7 +15,7 @@ public class Background_Light : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        players = new GameObject[5];
+        //players = new GameObject[4];
         Color_Brack();
         PNum = 0;
     }
@@ -54,6 +53,7 @@ public class Background_Light : MonoBehaviour {
 
     public void Color_Cange(GameObject player, float ratio)
     {
+        Debug.Log("入った");
         cange = true;
         players[PNum] = player;
         PNum++;
@@ -68,17 +68,19 @@ public class Background_Light : MonoBehaviour {
             }
         }
         PNum--;
+        PNum = Mathf.Max(PNum, 0);
         players[PNum] = null;
 
         if (PNum == 0)
         {
             Color_Brack();
         }
+        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
     }
     void Player_Sort(int SortNum)
     {
 
-        for (int i = SortNum; i < PNum; i++)
+        for (int i = SortNum; i < PNum-1; i++)
         {
             int j = i++;
             if (players[j] != null)
@@ -86,6 +88,7 @@ public class Background_Light : MonoBehaviour {
                 players[i] = players[j];
             }
         }
+        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 
     }
     void Color_Brack()

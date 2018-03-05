@@ -3,9 +3,10 @@ using System.Collections;
 
 public class Oil_Controller : MonoBehaviour {
 
+    /*
     [SerializeField, Tooltip("playerの持つライト")]
     GameObject Light;
-
+    */
     [SerializeField, Tooltip("playerの持つオイル量")]
     private float Oil;
 
@@ -53,7 +54,7 @@ public class Oil_Controller : MonoBehaviour {
                 initial = 90;
                 break;
             //ハード
-            default:
+            case 2:
                 initial = 60;
                 break;
         }

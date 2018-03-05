@@ -7,7 +7,7 @@ public class player_attack : MonoBehaviour {
 
     GameObject ya;
 
-    player_move direction;
+    P1_Move direction;
     public float time = 0.0f;
 
 
@@ -15,7 +15,7 @@ public class player_attack : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        direction = GetComponent<player_move>();
+        direction = GetComponent<P1_Move>();
 
         ya = (GameObject)Resources.Load("ya.down");
        
@@ -34,7 +34,7 @@ public class player_attack : MonoBehaviour {
 
        
 
-        if (Input.GetButtonDown("atttack1"))
+        if (Input.GetButtonDown("P1_A"))
         {
             Debug.Log("aa");
             switch (direction.muki)
@@ -83,7 +83,7 @@ public class player_attack : MonoBehaviour {
             
         }
 
-        if (Input.GetButtonDown("attack2"))
+        if (Input.GetButtonDown("P1_D"))
         {
             print("探検");
         }
@@ -93,8 +93,6 @@ public class player_attack : MonoBehaviour {
 
 
         }
-
-        
     
     }
 

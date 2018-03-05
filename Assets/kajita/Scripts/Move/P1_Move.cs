@@ -45,7 +45,14 @@ public class P1_Move : MonoBehaviour
     void Update()
     {
         x = (int)Input.GetAxis("Horizontal");
+
+        if (x != null)
+        {
+            print(x);
+        }
         y = (int)Input.GetAxis("Vertical");
+
+
 
         if (x == 0 && y == 0)
         {

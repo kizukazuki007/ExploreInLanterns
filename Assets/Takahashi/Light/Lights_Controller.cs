@@ -40,14 +40,14 @@ public class Lights_Controller : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Light")
+        if (other.tag == "Light")
         {
             other.gameObject.GetComponent<Background_Light>().Color_Cange(player, radius);
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag != "Light")
+        if (other.tag == "Light")
         {
             other.gameObject.GetComponent<Background_Light>().Exit_Player(player);
         }

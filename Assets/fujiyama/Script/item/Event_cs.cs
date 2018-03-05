@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Event_cs : MonoBehaviour {
 
-    public int Type=1;//識別の数字
+    public int Type = 1;//識別の数字
 
     SpriteRenderer MainspriteRender;
     public Sprite BoxOpen;
@@ -13,7 +13,7 @@ public class Event_cs : MonoBehaviour {
 
     public bool openflg = false;
 
-    [SerializeField,Tooltip("乱数")]
+    [SerializeField, Tooltip("乱数")]
     int range;
 
     int hougyouku;
@@ -47,25 +47,39 @@ public class Event_cs : MonoBehaviour {
     int max = 10;
 
 
+    public int number = 0;
+
     int save; //ランダム保存用
 
     int save2;   //ランダム(宝玉)保存用
 
     player_move man;
 
-    public int score=0;
+    public int score = 0;
 
-    public int score1=10; //宝玉３用
+    public int score1 = 10; //宝玉３用
 
     public int score2 = 100; //２宝玉用
 
-    public int score3=1; //火竜の宝玉用  
+    public int score3 = 1; //火竜の宝玉用  
 
-    stautascontolloer ya;
+    stautascontolloer status;
+
+    GameObject subjects = null;
+
+    public float time = 0.0f;
+
+    bool claerFlg = false;
+
+    [SerializeField]
+    string [] playername;
+
+    int PNum;
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         MainspriteRender = GetComponent<SpriteRenderer>();
 
         pos = transform.position;
@@ -82,27 +96,61 @@ public class Event_cs : MonoBehaviour {
 
         trap_Im = (GameObject)Resources.Load("wana");
 
-        man= GameObject.Find("player").GetComponent<player_move>();
 
-         ya = GameObject.Find("statusContolloer").GetComponent<stautascontolloer>();
+        status = GameObject.Find("statusContolloer").GetComponent<stautascontolloer>();
 
 
     }
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (claerFlg)
+        {
+            time += Time.deltaTime;
+        }
+
+    }
 
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        print("反応"); //デバッグ
+        //print("反応"); //デバッグ
+
+        if (other.tag == "Player")
+        {
+            subjects = other.gameObject;
+
+            for (int i = 0; i < PNum; i++)
+            {
+                if (subjects.name == playername[i])
+                {
+                    number = i;
+                    i = PNum;
+                }
+            }
+        }
+
+        /*
+        if (subjects.name == playername) number = 0;
+
+        if (subjects.name == playername2) number = 1;
+
+        if (subjects.name == playername3) number = 2;
+
+        if (subjects.name == playername4) number = 3;
+        */
+
+
+        //print(subjects);
 
         if (Type == 1 && other.tag == "Player") stairs(); //階段
 
         if (Type == 2 && other.tag == "Attack") trasureChest(); //宝箱を空ける前
 
-        if (Type == 2 && other.tag == "Player"&&openflg==true) trsureChestopen(); //宝箱が開いた時
+        if (Type == 2 && other.tag == "Player" && openflg == true) trsureChestopen(number, subjects); //宝箱が開いた時
 
-        if (Type == 3 && other.tag == "Player") trap();//罠
+        if (Type == 3 && other.tag == "Player") trap(subjects);//罠
     }
 
 
@@ -110,7 +158,7 @@ public class Event_cs : MonoBehaviour {
     {
         print("階段");
 
-        MapManege move =GameObject.Find("MapManege").GetComponent<MapManege>();
+        MapManege move = GameObject.Find("MapManege").GetComponent<MapManege>();
         move.StairsUP();
     }
 
@@ -124,20 +172,20 @@ public class Event_cs : MonoBehaviour {
         range = Random.Range(0, 100);
 
         save = range;
-        
+
 
 
 
         if (range <= 20) //20以下
         {
-            if (seisei==true)
+            if (seisei == true)
             {
                 print("aaaaa");
-               
+
                 yapre.transform.position = pos;//new Vector3(pos.x, pos.y, 0);
                 Instantiate(yapre);
                 seisei = false;
-                
+
             }
         }
 
@@ -159,7 +207,7 @@ public class Event_cs : MonoBehaviour {
                     hougyoukudesu = GameObject.Find("宝玉3(Clone)");
                 }
 
-                else if (hougyouku>=80) //宝玉２生成　20%
+                else if (hougyouku >= 80) //宝玉２生成　20%
                 {
                     //GameObject hougyo2 = (GameObject)Resources.Load("２宝玉");
                     hougyo2.transform.position = pos;//new Vector3(pos.x, pos.y, 0);
@@ -191,27 +239,31 @@ public class Event_cs : MonoBehaviour {
                 Instantiate(oill);
                 seisei = false;
             }
-           
+
         }
 
         openflg = true;
 
 
-       // gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
-   public void trsureChestopen()
+    public void trsureChestopen(int num, GameObject player)
     {
-        if (save<=20) //矢
+
+        if (save <= 20) //矢
         {
             int yuram = Random.Range(1, 4);
-            if (ya.number[0] > max)
+
+            if (status.ya_honnsu[num] < max)
             {
-                ya.number[0] = max;
+                status.ya_honnsu[num] += yuram;
+            }
+            else
+            {
+                status.ya_honnsu[num] = max;
             }
 
-            ya.number[0] += yuram;
-          
 
             Destroy(GameObject.Find("ya(Clone)"));
 
@@ -219,18 +271,18 @@ public class Event_cs : MonoBehaviour {
 
         if (range > 60) //スコア関連
         {
-            if (save2 <= 20) ya.score += score1;
+            if (save2 <= 20) stautascontolloer.score += score1;
 
-            else if (save2 >= 80) ya.score += score2;
+            else if (save2 >= 80) stautascontolloer.score += score2;
 
-            else ya.score += score3;
-            
+            else stautascontolloer.score += score3;
+
             Destroy(hougyoukudesu);
         }
 
         else
         {
-            float plus=0.0f;
+            float plus = 0.0f;
             int oil = Random.Range(0, 100);
             if (oil >= 30)
             {
@@ -254,29 +306,47 @@ public class Event_cs : MonoBehaviour {
             {
                 plus = 180.0f;
             }
-            
-            //player.GetComponent<Oil_Controller>().Set_Oil(plus);
+
+            player.GetComponent<Oil_Controller>().Set_Oil(plus);
             Destroy(GameObject.Find("oil1(Clone)"));
         }
-        
+
 
     }
 
-    public void trap()
+    public void trap(GameObject player)
     {
         MainspriteRender.sprite = wanaWorking;
-        man.GetComponent<player_move>().enabled = false;
-        Invoke("trapClear", 4.0f);
+        player.GetComponent<player_move>().enabled = false;
+
+        claerFlg = true;
+        trapClear(player);
     }
-   
-    public void trapClear()
+
+    public void trapClear(GameObject ply)
     {
-        man.GetComponent<player_move>().enabled = true;
-        Destroy(GameObject.Find("wana(Clone)"));
+        if (time > 4.0f)
+        {
+            ply.GetComponent<player_move>().enabled = true;
+            Destroy(GameObject.Find("wana(Clone)"));
+            claerFlg = false;
+            time = 0.0f;
+        }
+
     }
-   
+
+    //プレイヤーネーム　MAPから呼び出す
+    public void Set_PlayerName(GameObject [] player ,int PlayerNum)
+    {
+        PNum = PlayerNum;
+        playername = new string[PNum];
+        for(int i =0;i<PNum;i++)
+        {
+            playername[i] = player[i].name;
+        }
+    }
+
     
-    
-        
+
 }
 

@@ -147,6 +147,7 @@ public class MapManege : MonoBehaviour {
     {
         AllDestroy();
         AllCreate();
+        GameObject.Find("UI_Controller").GetComponent<UI_Controller>().Set_CaveName(Floor);
     }
 
     public void MonsterDedCreate()//   モンスターが死んだときに呼び出すもの
@@ -186,7 +187,7 @@ public class MapManege : MonoBehaviour {
         MapCreate();
         PlayrCreate();
         StairsCreate();
-        MonsterCreate();
+        //MonsterCreate();
         PresentCreate();
         TrapCreate();
     }
@@ -250,6 +251,7 @@ public class MapManege : MonoBehaviour {
             {
                 stairs.transform.position = new Vector2(x, y);
                 ivent[x, y] = Instantiate(stairs);
+                ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
         //        mapChipI[mapNomber, x, y] = 0;
                 break;
             }
@@ -287,6 +289,7 @@ public class MapManege : MonoBehaviour {
                 {
                     presentBox.transform.position = new Vector2(x, y);
                     ivent[x, y] = Instantiate(presentBox);
+                    ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
                     break;
                 }
             } while (true);
@@ -304,6 +307,7 @@ public class MapManege : MonoBehaviour {
                 {
                     trap.transform.position = new Vector2(x, y);
                     ivent[x, y] = Instantiate(trap);
+                    ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
                     break;
                 }
             } while (true);
@@ -345,6 +349,8 @@ public class MapManege : MonoBehaviour {
             }
         }
         //1Pの近くに２P３P４P
+        GameObject.Find("UI_Controller").GetComponent<UI_Controller>().Set_player(getPlayer,playerCount);
+        camera.GetComponent<Camera_controller>().Start_Camera(getPlayer, playerCount);
     }
     bool aisleTrue(int x,int y)
     {
