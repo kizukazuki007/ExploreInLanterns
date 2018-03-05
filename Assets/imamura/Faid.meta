@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Takahashi/Camera.meta
 guid: b3135b8b8f0ff7f43b4802ce014f5089
 folderAsset: yes
 timeCreated: 1519952794
+=======
+guid: aeb3dc48a9a55d1458ec6b97ddcfbd43
+folderAsset: yes
+timeCreated: 1520216303
+>>>>>>> 敵AI他:Assets/imamura/Faid.meta
 licenseType: Free
 DefaultImporter:
   userData: 
