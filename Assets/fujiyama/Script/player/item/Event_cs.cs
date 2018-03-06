@@ -71,6 +71,8 @@ public class Event_cs : MonoBehaviour {
 
     bool claerFlg = false;
 
+    GameObject hitter;
+
     [SerializeField]
     string [] playername;
 
@@ -108,6 +110,10 @@ public class Event_cs : MonoBehaviour {
         if (claerFlg)
         {
             time += Time.deltaTime;
+            if (time > 4.0f)
+            {
+                trapClear(hitter);
+            }
         }
 
     }
@@ -331,9 +337,10 @@ public class Event_cs : MonoBehaviour {
         MainspriteRender.sprite = wanaWorking;
         
         player.GetComponent<player_move>().enabled = false;
-
+        hitter = player;
         claerFlg = true;
-        trapClear(player);
+        
+            
     }
 
     public void trapClear(GameObject ply)
@@ -341,7 +348,7 @@ public class Event_cs : MonoBehaviour {
 
         print("発動しました");
       
-        if (time > 4.0f)
+     
         {
 
             //print("ffghddjdkkdkdk");
