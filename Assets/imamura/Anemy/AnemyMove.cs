@@ -15,7 +15,7 @@ public class AnemyMove : MonoBehaviour
     int houkou = 0;
     void Start()
     {
-        MManege = GameObject.Find("MapManege").GetComponent<MapManege>();
+        MManege = GameObject.Find("MAPCreate").GetComponent<MapManege>();
         target = transform.position;
     }
     void Update()

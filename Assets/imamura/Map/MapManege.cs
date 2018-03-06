@@ -29,6 +29,9 @@ public class MapManege : MonoBehaviour {
     public GameObject []getPlayer=new GameObject[4];      //他の人が使うよう
     public static int Floor;//他の人　階層
 
+    int difficulty; // 難易度の変数を入れる入れ物
+    float[] oil;
+
     //[SerializeField]      
     public int[,,] mapChipI = {
         {
@@ -165,8 +168,15 @@ public class MapManege : MonoBehaviour {
                     ivent[i, j] = nullObject;
             }
         }
-        AllCreate();
         StairsUP();
+
+        difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        for(int i = 0; i < playerCount; i++)
+        {
+            getPlayer[i].GetComponent<Oil_Controller>().set_InitialOil(difficulty);
+        }
+        oil = new float[playerCount];
+
     }
     void Update()//でバック用
     {
@@ -187,7 +197,7 @@ public class MapManege : MonoBehaviour {
         MapCreate();
         PlayrCreate();
         StairsCreate();
-        //MonsterCreate();
+        MonsterCreate();
         PresentCreate();
         TrapCreate();
     }

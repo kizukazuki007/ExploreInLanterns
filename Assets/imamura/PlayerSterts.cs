@@ -11,22 +11,22 @@ public class PlayerSterts : MonoBehaviour
     static int difficulty; // 難易度の変数を入れる入れ物
     void Start()
     {
-        difficulty = TitleSystem.Get_difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
         Enemy1 = Enemy1difficulty[difficulty];
         Enemy2 = Enemy2difficulty[difficulty];
 
     }
 
     // Update is called once per frame
-    void OnCollisionEnter2D(Collider other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Enemy1")//スペルが違う可能性あり。//アタック1なら
         {
-            HP -= Enemy1;
+            GetComponent<Oil_Controller>().Set_Oil(-Enemy1);
         }
         if (other.gameObject.tag == "Enemy2")//スペルが違う可能性あり。//アタック1なら
         {
-            HP -= Enemy2;
+            GetComponent<Oil_Controller>().Set_Oil(-Enemy2);
         }
     }
 }

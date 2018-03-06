@@ -158,7 +158,7 @@ public class Event_cs : MonoBehaviour {
     {
         print("階段");
 
-        MapManege move = GameObject.Find("MapManege").GetComponent<MapManege>();
+        MapManege move = GameObject.Find("MAPCreate").GetComponent<MapManege>();
         move.StairsUP();
     }
 
@@ -271,11 +271,23 @@ public class Event_cs : MonoBehaviour {
 
         if (range > 60) //スコア関連
         {
-            if (save2 <= 20) stautascontolloer.score += score1;
+            if (save2 <= 20)
+            {
+                stautascontolloer.score += score1;
+                status.GetComponent<stautascontolloer>().score_set(score1);
+            }
 
-            else if (save2 >= 80) stautascontolloer.score += score2;
+            else if (save2 >= 80)
+            {
+                stautascontolloer.score += score2;
+                status.GetComponent<stautascontolloer>().score_set(score2);
+            }
 
-            else stautascontolloer.score += score3;
+            else
+            {
+                stautascontolloer.score += score3;
+                status.GetComponent<stautascontolloer>().score_set(score3);
+            }
 
             Destroy(hougyoukudesu);
         }
@@ -317,6 +329,7 @@ public class Event_cs : MonoBehaviour {
     public void trap(GameObject player)
     {
         MainspriteRender.sprite = wanaWorking;
+        
         player.GetComponent<player_move>().enabled = false;
 
         claerFlg = true;
@@ -325,8 +338,13 @@ public class Event_cs : MonoBehaviour {
 
     public void trapClear(GameObject ply)
     {
+
+        print("発動しました");
+      
         if (time > 4.0f)
         {
+
+            //print("ffghddjdkkdkdk");
             ply.GetComponent<player_move>().enabled = true;
             Destroy(GameObject.Find("wana(Clone)"));
             claerFlg = false;

@@ -1,11 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// プレイヤーの番号
+/// </summary>
+public enum PlayerType
+{
+    player_1 = 1,
+    player_2,
+    player_3,
+    player_4
+}
+
 public class player_move : MonoBehaviour
 {
     public float speed = 1;
 
+    //プレイヤーの番号を判別
+    public PlayerType type;
 
+    //仮想入力の名前
+    string Horizontal_p;
+    string Vertical_p;
 
     public Sprite[] walk_down = new Sprite[2];
     public Sprite walk_down_last;
@@ -40,6 +56,8 @@ public class player_move : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Horizontal_p = "P" + (int)type + "_Horizontal";
+        Vertical_p = "P" + (int)type + "_Vertical";
 
         MainSprite = GetComponent<SpriteRenderer>();
     }
@@ -48,8 +66,8 @@ public class player_move : MonoBehaviour
     void Update()
     {
 
-        x = (int)Input.GetAxis("Horizontal");
-        y = (int)Input.GetAxis("Vertical");
+        x = (int)Input.GetAxis(Horizontal_p);
+        y = (int)Input.GetAxis(Vertical_p);
 
         if (x == 0 && y == 0)
         {

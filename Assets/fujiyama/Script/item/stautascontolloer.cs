@@ -3,23 +3,30 @@ using System.Collections;
 
 public class stautascontolloer : MonoBehaviour {
 
-        // Use this for initialization
-        public int[] ya_honnsu = new int[4];
+    public GameObject UI_Con;
 
-        public int initial_value = 6;
+    // Use this for initialization
+    public int[] ya_honnsu = new int[4];
 
-        public static int score;
+    public int initial_value = 6;
+
+    public static int score;
 
 
-        void Start()
+    void Start()
+    {
+        for (int i = 0; i <= 3; i++)
         {
-            for (int i = 0; i <= 3; i++)
-            {
-                ya_honnsu[i] += initial_value;
-            }
-
+            ya_honnsu[i] += initial_value;
         }
+
+    }
 
         // Update is called once per frame
         
+    public void score_set(int plus)
+    {
+        UI_Con.GetComponent<UI_Controller>().Set_Score(plus);
+    }
+    
 }

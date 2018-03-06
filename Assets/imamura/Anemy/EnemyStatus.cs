@@ -13,10 +13,10 @@ public class EnemyStatus : MonoBehaviour
 
     void Start()
     {
-        difficulty = TitleSystem.Get_difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        //difficulty = TitleSystem.Get_difficulty(); // タイトルシステムから難易度の変数を読み込む。
         HP = HPdifficulty[difficulty];
     }
-    void OnCollisionEnter2D(Collider other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Attack1")//スペルが違う可能性あり。//アタック1なら
         {
