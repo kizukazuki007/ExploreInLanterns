@@ -3,8 +3,9 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class FadeManager : MonoBehaviour
-{ // ここでゲームオーバー処理とクリア処理
+public class BlackOut : MonoBehaviour {
+
+    // ---------------------------
 
     /// <summary>
     /// 基本的にenableFadeをtrueにしたあと、したいフェードのboolをtrueに変える
@@ -14,7 +15,7 @@ public class FadeManager : MonoBehaviour
     public bool enableFadeOut = false;
     public bool enableFadeOn = false;
 
-    public float speed = 0.02f;
+    public float speed = 1;
 
     public Image FadeImage;
 
@@ -22,11 +23,13 @@ public class FadeManager : MonoBehaviour
 
     private bool enableAlphaTop = false;
 
-    public delegate void FadeOutCallback();
-    public FadeOutCallback fadeoutcallback;
+    // ---------------------------
+
+   
 
     void Start()
     {
+
         enableFade = true;
         enableFadeIn = true;
         setAlpha(FadeImage, count);
@@ -34,7 +37,6 @@ public class FadeManager : MonoBehaviour
 
     void Update()
     {
-
         if (enableFadeOn)
         {
             FadeInAndOut(FadeImage);
@@ -51,15 +53,11 @@ public class FadeManager : MonoBehaviour
         }
     }
 
-    void setFadeOutCallback(FadeOutCallback fc)
-    {
-        this.fadeoutcallback = fc;
-    }
-
     void setAlpha(Image image, float alpha)
     {
         image.color = new Color(image.color.r, image.color.g, image.color.b, alpha);
     }
+
 
     public void FadeOut(Image image)
     {
@@ -72,7 +70,11 @@ public class FadeManager : MonoBehaviour
                 enableFade = false;
                 if (enableFadeOut)
                 {
-            //        if (callback != null) callback();
+                    //フェードアウトした時の処理をここに書く
+                    enableFade = true;
+                    enableFadeIn = true;
+                    enableFadeOut = false;
+
                 }
             }
         }
@@ -91,7 +93,6 @@ public class FadeManager : MonoBehaviour
             }
         }
     }
-
     void FadeInAndOut(Image image)
     {
 
@@ -118,4 +119,5 @@ public class FadeManager : MonoBehaviour
             }
         }
     }
+
 }

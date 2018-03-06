@@ -13,7 +13,7 @@ public class EnemyStatus : MonoBehaviour
 
     void Start()
     {
-        difficulty = TitleSystem.Get_difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        difficulty = TitleSystem.Get_Difficulty(); //タイトルシステムから難易度の変数を読み込む。
         HP = HPdifficulty[difficulty];
     }
     void OnCollisionEnter2D(Collider other)

@@ -3,15 +3,15 @@ using System.Collections;
 
 public class MapManege : MonoBehaviour {
     public GameObject []Monster;//unityでアタッチして              //iventとしてまとめたほうがよかった。
-    public int[] MonsterCount;//どのモンスター[]を何引き出すか                    難易度によって数字を変える。（時間があれば）
+    int[] MonsterCount;//どのモンスター[]を何引き出すか                    難易度によって数字を変える。（時間があれば）
     public int distance;
     public GameObject presentBox;//プレゼント
-    public int presentBoxCount;//宝箱を何個出すか
+    int presentBoxCount;//宝箱を何個出すか
     public GameObject trap;
-    public int trapCount;
+    int trapCount;
 
-    public GameObject stairs;//強制１個
-                                        //iventのゲームオブジェクトをすべて一つの変数にまとめてしまえば一発でできる？←要検討
+    public GameObject stairs;//強制１個                                //iventのゲームオブジェクトをすべて一つの変数にまとめてしまえば一発でできる？←要検討
+
     public GameObject wall;
     public GameObject ground;
     public GameObject black;

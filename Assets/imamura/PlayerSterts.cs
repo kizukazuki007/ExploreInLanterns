@@ -11,7 +11,7 @@ public class PlayerSterts : MonoBehaviour
     static int difficulty; // 難易度の変数を入れる入れ物
     void Start()
     {
-        difficulty = TitleSystem.Get_difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
         Enemy1 = Enemy1difficulty[difficulty];
         Enemy2 = Enemy2difficulty[difficulty];
 

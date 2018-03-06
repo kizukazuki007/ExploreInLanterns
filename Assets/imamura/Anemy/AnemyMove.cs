@@ -316,4 +316,23 @@ public class AnemyMove : MonoBehaviour
         Ypos++;
         return Ypos;
     }
+    void OnCollisionEnter2D(Collider other)
+    {
+        if (other.gameObject.tag == "Attack1" || other.gameObject.tag == "Attack2")
+        {
+            this.speed = 0.5f;
+        }
+    }
+    void OnCollisionStay2D(Collider other)
+    {
+        if (other.tag == "Enemy1" || other.tag == "Enemy2")
+        {
+            if(Vector3.Distance(transform.position, target)< Vector3.Distance(other.transform.position, target))
+            this.speed = 0;
+        }
+    }
+    void OnCollisionExit2D(Collider other)
+    {
+        speed = 1;
+    }
 }
