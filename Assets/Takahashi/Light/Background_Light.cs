@@ -53,7 +53,6 @@ public class Background_Light : MonoBehaviour {
 
     public void Color_Cange(GameObject player, float ratio)
     {
-        Debug.Log("入った");
         cange = true;
         players[PNum] = player;
         PNum++;
@@ -75,7 +74,7 @@ public class Background_Light : MonoBehaviour {
         {
             Color_Brack();
         }
-        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        //transform.position = new Vector3(0.0f, 0.0f, 0.0f);
     }
     void Player_Sort(int SortNum)
     {
@@ -88,7 +87,7 @@ public class Background_Light : MonoBehaviour {
                 players[i] = players[j];
             }
         }
-        transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+        //transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 
     }
     void Color_Brack()

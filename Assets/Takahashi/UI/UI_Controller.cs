@@ -19,8 +19,8 @@ public class UI_Controller : MonoBehaviour {
     [SerializeField, Tooltip("Playerのランタン中身")]
     Image [] players_Contents = new Image[4];
     
-    [Tooltip("score(値)")]
-    public static int score;
+    [SerializeField,Tooltip("score(値)")]
+    int score;
     
     [SerializeField, Tooltip("プレイ人数")]
     int Player_Number;
@@ -55,17 +55,11 @@ public class UI_Controller : MonoBehaviour {
         Score_Text.text = "Score:" + score.ToString("D6");
     }
 
-    //リザルト用
-    public static int Get_Score()
-    {
-        return score;
-    }
-
     //洞窟名、階数表示　MAPの方からフロアが変わるときに使用
     public void Set_CaveName(int floor)
     {
         //洞窟名、階数表示
-        Cave_Name.text = "暗闇の洞窟 " + floor + "/5階";
+        Cave_Name.text = "暗闇の洞窟 " + floor + "/5 階";
     }
 
     //マップから設定する 1回だけ使用

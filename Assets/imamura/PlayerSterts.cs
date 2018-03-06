@@ -18,15 +18,15 @@ public class PlayerSterts : MonoBehaviour
     }
 
     // Update is called once per frame
-    void OnCollisionEnter2D(Collider other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Enemy1")//スペルが違う可能性あり。//アタック1なら
         {
-            HP -= Enemy1;
+            GetComponent<Oil_Controller>().Set_Oil(-Enemy1);
         }
         if (other.gameObject.tag == "Enemy2")//スペルが違う可能性あり。//アタック1なら
         {
-            HP -= Enemy2;
+            GetComponent<Oil_Controller>().Set_Oil(-Enemy2);
         }
     }
 }

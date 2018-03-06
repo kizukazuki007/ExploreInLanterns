@@ -28,6 +28,7 @@ public class Lights_Controller : MonoBehaviour
         oil = player.GetComponent<Oil_Controller>().Get_Oil();
         radius = oil / oil_max;
         Lanterns_Range.radius = radius_max * radius;
+        Lanterns_Range.radius = Mathf.Max(Lanterns_Range.radius, radius_max);
         /*
         color = radius;
         player.GetComponent<SpriteRenderer>().color = new Color(color,color,color);
@@ -36,20 +37,44 @@ public class Lights_Controller : MonoBehaviour
         {
             player.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f);
         }
+        if(transform.position != player.transform.position)
+        {
+            transform.position = player.transform.position;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Light")
+        if (other.tag != "Player")
         {
-            other.gameObject.GetComponent<Background_Light>().Color_Cange(player, radius);
+            if (other.tag != "Light")
+            {
+                try
+                {
+                    other.gameObject.GetComponent<Background_Light>().Color_Cange(player, radius);
+                }
+                catch
+                {
+
+                }
+            }
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Light")
+        if (other.tag != "Player")
         {
-            other.gameObject.GetComponent<Background_Light>().Exit_Player(player);
+            if (other.tag != "Light")
+            {
+                try
+                {
+                    other.gameObject.GetComponent<Background_Light>().Exit_Player(player);
+                }
+                catch
+                {
+
+                }   
+            }
         }
     }
 }
