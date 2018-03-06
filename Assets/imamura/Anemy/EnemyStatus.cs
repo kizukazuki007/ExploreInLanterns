@@ -10,11 +10,14 @@ public class EnemyStatus : MonoBehaviour
     int[] HPdifficulty = { 5, 7, 10 };
 
     static int difficulty; // 難易度の変数を入れる入れ物
+    MapManege MManege;
 
     void Start()
     {
-        //difficulty = TitleSystem.Get_difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
         HP = HPdifficulty[difficulty];
+
+        MManege = GameObject.Find("MAPCreate").GetComponent<MapManege>();
     }
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -30,6 +33,7 @@ public class EnemyStatus : MonoBehaviour
         }
         if (HP <= 0)
         {
+            MManege.MonsterDedCreate();
             Destroy(gameObject);
         }
     }

@@ -3,12 +3,16 @@ using System.Collections;
 
 public class MapManege : MonoBehaviour {
     public GameObject []Monster;//unityでアタッチして              //iventとしてまとめたほうがよかった。
-    public int[] MonsterCount;//どのモンスター[]を何引き出すか                    難易度によって数字を変える。（時間があれば）
+    int MonsterCount ;//どのモンスター[]を何引き出すか                    難易度によって数字を変える。（時間があれば）
     public int distance;
     public GameObject presentBox;//プレゼント
-    public int presentBoxCount;//宝箱を何個出すか
+    int presentBoxCount;//宝箱を何個出すか
     public GameObject trap;
-    public int trapCount;
+    int trapCount;
+
+    int[] MonsterMax = { 7, 10, 15 };
+    int[] presentBoxMax= { 5, 3, 3 };
+    int[] trapMax = { 3, 5, 5 };
 
     public GameObject stairs;//強制１個
                                         //iventのゲームオブジェクトをすべて一つの変数にまとめてしまえば一発でできる？←要検討
@@ -22,14 +26,14 @@ public class MapManege : MonoBehaviour {
 
     public int mapNomber;
     int mapOldNomber=-1;
+    int difficulty; // 難易度の変数を入れる入れ物            public /staticをつけることになるかも？
     
     public int playerCount;     //タイトルで設定した数字をここにいれる                    カメラの呼び出しをするその時に、人数とプレーヤー変数を入れる
     public GameObject []pGObgect;//プレーヤ―のゲームオブジェクトの素材
     public GameObject nullObject;//ごり押し処理用
     public GameObject []getPlayer=new GameObject[4];      //他の人が使うよう
     public static int Floor;//他の人　階層
-
-    int difficulty; // 難易度の変数を入れる入れ物
+    
     float[] oil;
 
     //[SerializeField]      
@@ -157,9 +161,13 @@ public class MapManege : MonoBehaviour {
     {
         MonsterCreate();
     }
-
     void Start()//最初作るとき                                        ここでかじた作のプレイヤー人数＋を記憶
     {
+        difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        MonsterCount = MonsterMax[difficulty];
+        presentBoxCount = presentBoxMax[difficulty];
+        trapCount = trapMax[difficulty];
+
         Floor = 0;
         for (int i = 0; i < ivent.GetLength(0); i++)
         {
@@ -271,7 +279,7 @@ public class MapManege : MonoBehaviour {
     {
         for (int i = 0; i < Monster.Length; i++)
         {
-            for (int j = 0; j < MonsterCount[i]; j++)
+            for (int j = 0; j < MonsterCount; j++)
             {
                 do
                 {
