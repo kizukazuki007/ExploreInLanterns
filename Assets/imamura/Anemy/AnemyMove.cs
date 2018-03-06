@@ -316,14 +316,14 @@ public class AnemyMove : MonoBehaviour
         Ypos++;
         return Ypos;
     }
-    void OnCollisionEnter2D(Collider other)
+    void OnTriggerEnter2D(Collider other)
     {
         if (other.gameObject.tag == "Attack1" || other.gameObject.tag == "Attack2")
         {
             this.speed = 0.5f;
         }
     }
-    void OnCollisionStay2D(Collider other)
+    void OnTriggerStay2D(Collider other)
     {
         if (other.tag == "Enemy1" || other.tag == "Enemy2")
         {
@@ -331,7 +331,7 @@ public class AnemyMove : MonoBehaviour
             this.speed = 0;
         }
     }
-    void OnCollisionExit2D(Collider other)
+    void OnTriggerExit2D(Collider other)
     {
         speed = 1;
     }
