@@ -28,7 +28,7 @@ public class AnemyMove : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, target) < 0.1f)
+            if (Vector3.Distance(transform.position, target) < 0.5f)
             {
                 if (anemyInRoom)
                 {
@@ -316,4 +316,34 @@ public class AnemyMove : MonoBehaviour
         Ypos++;
         return Ypos;
     }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Attack1" || other.gameObject.tag == "Attack2")
+        {
+            this.speed = 0.5f;
+        }
+    }
+    void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Enemy1" || other.gameObject.tag == "Enemy2")
+        {
+        Debug.Log("bbb");
+            if (Vector3.Distance(transform.position, target) > Vector3.Distance(other.transform.position, target))
+            {
+                this.speed = -0.1f;
+            }
+        }
+    }
+    void OnCollisionExit2D(Collision2D other)
+    {
+        speed = 1f;
+       // Invoke("SpeedReset", 2);
+    }
+    void SpeedReset()
+    {
+        speed = 1;
+    }
+    //上は衝突したときの判定
+    //下はトリガーでぶつかった時に使う
+    //void OnTriggerExit2D(Collider2D other)
 }
