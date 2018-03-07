@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class stautascontolloer : MonoBehaviour {
-
-    public GameObject UI_Con;
+    
 
     // Use this for initialization
     public int[] ya_honnsu = new int[4];
@@ -22,11 +21,10 @@ public class stautascontolloer : MonoBehaviour {
 
     }
 
-        // Update is called once per frame
-        
-    public void score_set(int plus)
+    // Update is called once per frame
+    public void score_set(int i)
     {
-        UI_Con.GetComponent<UI_Controller>().Set_Score(plus);
+
     }
-    
+
 }

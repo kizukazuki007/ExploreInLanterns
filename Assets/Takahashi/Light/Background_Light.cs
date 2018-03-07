@@ -36,6 +36,10 @@ public class Background_Light : MonoBehaviour {
                 {
                     Player_Sort(i);
                 }
+                else if (players[i].GetComponent<Oil_Controller>().Get_Oil() <= 1.0f)
+                {
+                    Exit_Player(players[i]);
+                }
                 else
                 {
                     px = (int)players[i].transform.position.x;

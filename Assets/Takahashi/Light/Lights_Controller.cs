@@ -28,7 +28,10 @@ public class Lights_Controller : MonoBehaviour
         oil = player.GetComponent<Oil_Controller>().Get_Oil();
         radius = oil / oil_max;
         Lanterns_Range.radius = radius_max * radius;
-        Lanterns_Range.radius = Mathf.Max(Lanterns_Range.radius, radius_max);
+        if (Lanterns_Range.radius > radius_max)
+        {
+            Lanterns_Range.radius = radius_max;
+        }
         /*
         color = radius;
         player.GetComponent<SpriteRenderer>().color = new Color(color,color,color);

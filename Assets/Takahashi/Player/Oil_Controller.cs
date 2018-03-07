@@ -2,11 +2,7 @@
 using System.Collections;
 
 public class Oil_Controller : MonoBehaviour {
-
-    /*
-    [SerializeField, Tooltip("playerの持つライト")]
-    GameObject Light;
-    */
+    
     [SerializeField, Tooltip("playerの持つオイル量")]
     private float Oil;
 
@@ -26,7 +22,6 @@ public class Oil_Controller : MonoBehaviour {
         Oil -= Time.deltaTime;
         Oil = Mathf.Max(Oil, 0.0f);
         
-        //Light.GetComponent<Light_Controller>().set_Oil(Oil);
 	}
 
 
@@ -38,9 +33,17 @@ public class Oil_Controller : MonoBehaviour {
     public void Set_Oil(float plus)
     {
         Oil += plus;
-        Oil = Mathf.Max(Oil, 180.0f);
+        if (Oil > 180.0f)
+        {
+            Oil = 180.0f;
+        }
+    }
+    public void Set_RestartOil(float Oil_Re)
+    {
+        Oil = Oil_Re;
     }
     
+    //最初1回だけMAPから呼び出す
     public void set_InitialOil(int difficulty)
     {
         switch (difficulty)
