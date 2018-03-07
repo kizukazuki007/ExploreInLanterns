@@ -19,10 +19,11 @@ public class EnemyStatus : MonoBehaviour
 
         MManege = GameObject.Find("MAPCreate").GetComponent<MapManege>();
     }
-    void OnCollisionEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Attack1")//スペルが違う可能性あり。//アタック1なら
         {
+            Debug.Log(HP);
             HP -= Attack1;
             Destroy(other.gameObject);
         }
@@ -34,7 +35,7 @@ public class EnemyStatus : MonoBehaviour
         if (HP <= 0)
         {
             MManege.MonsterDedCreate();
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

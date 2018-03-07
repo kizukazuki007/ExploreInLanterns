@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MapManege : MonoBehaviour {
     public GameObject []Monster;//unityでアタッチして              //iventとしてまとめたほうがよかった。
@@ -159,7 +160,19 @@ public class MapManege : MonoBehaviour {
 
     public void MonsterDedCreate()//   モンスターが死んだときに呼び出すもの
     {
-        MonsterCreate();
+        do
+        {
+            int x = Random.Range(0, mapChipI.GetLength(1));
+            int y = Random.Range(0, mapChipI.GetLength(2));
+            if (aisleTrue(x, y) && (camera.transform.position.x + distance < x || camera.transform.position.x - distance > x) && (camera.transform.position.y + distance < y || camera.transform.position.y - distance > y))
+            {
+                int RMonster = Random.Range(0, Monster.Length);
+
+                Monster[RMonster].transform.position = new Vector2(x, y);
+                ivent[x, y] = Instantiate(Monster[RMonster]);
+                break;
+            }
+        } while (true);
     }
     void Start()//最初作るとき                                        ここでかじた作のプレイヤー人数＋を記憶
     {
@@ -197,6 +210,10 @@ public class MapManege : MonoBehaviour {
     void AllCreate()     //最初と階段を上った時に呼び出す。
     {
         Floor++;
+        if (Floor == 6)
+        {
+            SceneManager.LoadScene("retult");
+        }
         do
         {
             mapNomber = Random.Range(0, 3);
@@ -270,15 +287,12 @@ public class MapManege : MonoBehaviour {
                 stairs.transform.position = new Vector2(x, y);
                 ivent[x, y] = Instantiate(stairs);
                 ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
-        //        mapChipI[mapNomber, x, y] = 0;
                 break;
             }
         } while (true);
     }
     void MonsterCreate()
     {
-        for (int i = 0; i < Monster.Length; i++)
-        {
             for (int j = 0; j < MonsterCount; j++)
             {
                 do
@@ -287,13 +301,14 @@ public class MapManege : MonoBehaviour {
                     int y = Random.Range(0, mapChipI.GetLength(2));
                     if (aisleTrue(x, y) && (camera.transform.position.x + distance < x || camera.transform.position.x - distance > x) && (camera.transform.position.y + distance < y || camera.transform.position.y - distance > y))
                     {
-                        Monster[i].transform.position = new Vector2(x, y);
-                        ivent[x, y] = Instantiate(Monster[i]);
+                        int RMonster = Random.Range(0, Monster.Length);
+                    
+                        Monster[RMonster].transform.position = new Vector2(x, y);
+                        ivent[x, y] = Instantiate(Monster[RMonster]);
                         break;
                     }
                 } while (true);
             }
-        }
     }
     void PresentCreate()
     {
