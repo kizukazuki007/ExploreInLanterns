@@ -26,4 +26,7 @@ public class down_attack : MonoBehaviour {
         time += Time.deltaTime;
 
     }
+
+
+    
 }

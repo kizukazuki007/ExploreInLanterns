@@ -8,10 +8,13 @@ public class Image_Controller : MonoBehaviour {
     [SerializeField, Tooltip("player")]
     GameObject Player;
 
+    GameObject UI_Controller;
+
     [SerializeField]
     float Oil;
 
     float Oil_Max = 180.0f;
+    int Number;
 
 	// Use this for initialization
 	void Start ()
@@ -27,11 +30,18 @@ public class Image_Controller : MonoBehaviour {
 
         //オイル量から割合を出し、その割合分Contentsの表示を変更
         GetComponent<Image>().fillAmount = Oil / Oil_Max;
+
+        if (Oil == 0.0f)
+        {
+            UI_Controller.GetComponent<UI_Controller>().Player_Death(Number);
+        }
 	}
 
     //プレイヤーをスクリプト内の変数にセット
-    public void Set_Player(GameObject player)
+    public void Set_Player(GameObject player,GameObject UI_Con,int Num)
     {
         Player = player;
+        UI_Controller = UI_Con;
+        Number = Num;
     }
 }

@@ -170,12 +170,12 @@ public class TitleSystem : MonoBehaviour
 
             Single.Select();
 
-            if (Input.GetAxis("Horizontal") == 1)
+            if (Input.GetAxis("P1_Horizontal") == 1)
             {
                 Single.Select();
             }
 
-            if (Input.GetAxis("Horizontal") == -1)
+            if (Input.GetAxis("P1_Horizontal") == -1)
             {
                 Multi.Select();
             }
@@ -225,7 +225,7 @@ public class TitleSystem : MonoBehaviour
         Normal = GameObject.Find("Canvas/NORMAL").GetComponent<Button>();
         Hard = GameObject.Find("Canvas/HARD").GetComponent<Button>();
 
-        if (Input.GetAxis("Vertical") == -1)
+        if (Input.GetAxis("P1_Vertical") == -1)
         {
             Select = 1;
         }

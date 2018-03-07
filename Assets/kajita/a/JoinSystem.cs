@@ -82,7 +82,7 @@ public class JoinSystem : MonoBehaviour {
 
         if (Input.GetButtonDown("Cancel"))
         {
-            SceneManager.LoadScene("");
+            SceneManager.LoadScene("proto");
         }
     }
 }

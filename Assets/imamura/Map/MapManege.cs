@@ -12,7 +12,7 @@ public class MapManege : MonoBehaviour {
     int trapCount;
 
     int[] MonsterMax = { 7, 10, 15 };
-    int[] presentBoxMax= { 5, 3, 3 };
+    int[] presentBoxMax= { 100, 3, 3 };
     int[] trapMax = { 3, 5, 5 };
 
     public GameObject stairs;//強制１個
@@ -157,8 +157,13 @@ public class MapManege : MonoBehaviour {
         AllCreate();
         GameObject.Find("UI_Controller").GetComponent<UI_Controller>().Set_CaveName(Floor);
     }
-
+    public int monsterCreate=5;
     public void MonsterDedCreate()//   モンスターが死んだときに呼び出すもの
+    {
+        Invoke("MDC", monsterCreate);
+        
+    }
+    void MDC()
     {
         do
         {
@@ -212,7 +217,7 @@ public class MapManege : MonoBehaviour {
         Floor++;
         if (Floor == 6)
         {
-            SceneManager.LoadScene("retult");
+            SceneManager.LoadScene("Result_Clear");
         }
         do
         {
@@ -286,7 +291,6 @@ public class MapManege : MonoBehaviour {
             {
                 stairs.transform.position = new Vector2(x, y);
                 ivent[x, y] = Instantiate(stairs);
-                ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
                 break;
             }
         } while (true);
@@ -322,7 +326,6 @@ public class MapManege : MonoBehaviour {
                 {
                     presentBox.transform.position = new Vector2(x, y);
                     ivent[x, y] = Instantiate(presentBox);
-                    ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
                     break;
                 }
             } while (true);
@@ -340,7 +343,6 @@ public class MapManege : MonoBehaviour {
                 {
                     trap.transform.position = new Vector2(x, y);
                     ivent[x, y] = Instantiate(trap);
-                    ivent[x, y].GetComponent<Event_cs>().Set_PlayerName(getPlayer, playerCount);
                     break;
                 }
             } while (true);
