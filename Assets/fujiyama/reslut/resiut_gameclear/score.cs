@@ -25,19 +25,23 @@ public class score : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        _score = 100;//st.score;
+        _score = stautascontolloer.score_get();//st.score;
         N_score = 0;
         cange = true;
         app = GameObject.Find("playera_app").GetComponent<player_app>();
 
 
-
-        //Invoke("score_instanc",n);
+        
 
     }
 
     void Update()
     {
+        if ((Input.GetButtonDown("P1_D") || Input.GetButtonDown("P2_D") || Input.GetButtonDown("P3_D") || Input.GetButtonDown("P4_D")) && cange == true)
+        {
+            N_score = _score;
+        }
+
         if (second > rimit)
         {
 
@@ -57,18 +61,18 @@ public class score : MonoBehaviour
 
 
             }
-            
-           
+
+
+        }
+        else
+        {
+            second += Time.deltaTime;
         }
         this.GetComponent<Text>().text = "score:  " + N_score;
-        second += Time.deltaTime;
+
 
     }
-
-    void score_instanc()
-    {
-        //this.GetComponent<Text>().text = "score:  " + stautascontolloer.score;
-    }
+    
 }
 	
 	// Update is called once per frame

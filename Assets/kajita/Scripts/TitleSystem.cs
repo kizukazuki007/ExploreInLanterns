@@ -197,6 +197,8 @@ public class TitleSystem : MonoBehaviour
         audioSource.clip = ok;
         audioSource.Play();
 
+        Member = 1;
+
         gamemode = 0;
 
     }
@@ -316,6 +318,11 @@ public class TitleSystem : MonoBehaviour
     public static int Get_Difficulty()
     {
         return Difficulty;
+    }
+
+    public static void Set_Member(int member)
+    {
+        Member = member;
     }
 
     public static int Get_Member()

@@ -29,7 +29,7 @@ public class MapManege : MonoBehaviour {
     int mapOldNomber=-1;
     int difficulty; // 難易度の変数を入れる入れ物            public /staticをつけることになるかも？
     
-    public int playerCount;     //タイトルで設定した数字をここにいれる                    カメラの呼び出しをするその時に、人数とプレーヤー変数を入れる
+    public static int playerCount;     //タイトルで設定した数字をここにいれる                    カメラの呼び出しをするその時に、人数とプレーヤー変数を入れる
     public GameObject []pGObgect;//プレーヤ―のゲームオブジェクトの素材
     public GameObject nullObject;//ごり押し処理用
     public GameObject []getPlayer=new GameObject[4];      //他の人が使うよう
@@ -182,6 +182,7 @@ public class MapManege : MonoBehaviour {
     void Start()//最初作るとき                                        ここでかじた作のプレイヤー人数＋を記憶
     {
         difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
+        playerCount = TitleSystem.Get_Member();
         MonsterCount = MonsterMax[difficulty];
         presentBoxCount = presentBoxMax[difficulty];
         trapCount = trapMax[difficulty];

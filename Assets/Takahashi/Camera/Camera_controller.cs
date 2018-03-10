@@ -61,6 +61,7 @@ public class Camera_controller : MonoBehaviour {
     //Map生成時に呼ぶ
     public void Start_Camera(GameObject [] player ,int PNum)
     {
+        print("かめらプレイヤーセット" + PNum);
         players = new GameObject[PNum];
         player_oil = new float[PNum];
         for (int i = 0;i < PNum; i++)
