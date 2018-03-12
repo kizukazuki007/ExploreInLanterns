@@ -89,6 +89,10 @@ public class TitleSystem : MonoBehaviour
                 SceneManager.LoadScene("MultiSetting");
             }
         }
+        else
+        {
+            ready_time = 0;
+        }
 
     }
 

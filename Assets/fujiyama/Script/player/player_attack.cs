@@ -73,14 +73,13 @@ public class player_attack : MonoBehaviour {
 
             if (Input.GetButtonDown(attack))
             {
-                SE.select_SE(0);
-                Debug.Log(direction.muki);
                 switch (direction.muki)
                 {
                     case 1:
                         ya[0].transform.position = new Vector3(playerpos.x, playerpos.y, playerpos.z);
                         if (time > rimit)
                         {
+                            SE.select_SE(0);
                             Instantiate(ya[0]);
                             time = 0.0f;
                             st.ya_honnsu[num] -= 1;
@@ -92,6 +91,7 @@ public class player_attack : MonoBehaviour {
                         ya[1].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                         if (time > rimit)
                         {
+                            SE.select_SE(0);
                             Instantiate(ya[1]);
                             time = 0.0f;
                             st.ya_honnsu[num] -= 1;
@@ -102,6 +102,7 @@ public class player_attack : MonoBehaviour {
                         ya[2].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                         if (time > rimit)
                         {
+                            SE.select_SE(0);
                             Instantiate(ya[2]);
                             time = 0.0f;
                             st.ya_honnsu[num] -= 1;
@@ -112,6 +113,7 @@ public class player_attack : MonoBehaviour {
                         ya[3].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                         if (time > rimit)
                         {
+                            SE.select_SE(0);
                             Instantiate(ya[3]);
                             time = 0.0f;
                             st.ya_honnsu[num] -= 1;
@@ -124,13 +126,13 @@ public class player_attack : MonoBehaviour {
         }
         if (Input.GetButtonDown(attack2))
         {
-            SE.select_SE(1);
             switch (direction.muki)
             {
                 case 1:
                     knife[0].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                     if (time_2 > kinfe_rimit)
                     {
+                        SE.select_SE(1);
                         Instantiate(knife[0]);
                         time_2 = 0.0f;
                     }
@@ -139,6 +141,7 @@ public class player_attack : MonoBehaviour {
                     knife[1].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                     if (time_2 > kinfe_rimit)
                     {
+                        SE.select_SE(1);
                         Instantiate(knife[1]);
                         time_2 = 0.0f;
                     }             
@@ -147,6 +150,7 @@ public class player_attack : MonoBehaviour {
                     knife[2].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                     if (time_2 > kinfe_rimit)
                     {
+                        SE.select_SE(1);
                         Instantiate(knife[2]);
                         time_2 = 0.0f;
                     }
@@ -155,6 +159,7 @@ public class player_attack : MonoBehaviour {
                     knife[3].transform.position = new Vector3(playerpos.x, playerpos.y, 0);
                     if (time_2 > kinfe_rimit)
                     {
+                        SE.select_SE(1);
                         Instantiate(knife[3]);
                         time_2 = 0.0f;
                     }

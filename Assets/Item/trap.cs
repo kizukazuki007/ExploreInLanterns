@@ -48,16 +48,18 @@ public class trap : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.tag == "Player")
+        if (trapflg)
         {
-            
+            if (other.tag == "Player")
+            {
+
                 player = other.gameObject;
                 MainSprite.sprite = wanaWoriking;
                 SE.select_SE(5);
                 player.GetComponent<player_move>().enabled = false;
-                flg = true; 
-          
+                flg = true;
+                trapflg = false;
+            }
         }
     }
     void trapclaer()
