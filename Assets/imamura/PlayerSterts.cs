@@ -9,6 +9,11 @@ public class PlayerSterts : MonoBehaviour
     int[] Enemy1difficulty = { 3, 5, 10 };
     int[] Enemy2difficulty = { 5, 7, 10 };
     static int difficulty; // 難易度の変数を入れる入れ物
+    Oil_Controller Oil_C;
+    void Awake()
+    {
+        Oil_C = GetComponent<Oil_Controller>();
+    }
     void Start()
     {
         difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
@@ -18,15 +23,15 @@ public class PlayerSterts : MonoBehaviour
     }
 
     // Update is called once per frame
-    void OnCollisionEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Enemy1")//スペルが違う可能性あり。//アタック1なら
         {
-            GetComponent<Oil_Controller>().Set_Oil(-Enemy1);
+            Oil_C.Set_Oil(-Enemy1);
         }
         if (other.gameObject.tag == "Enemy2")//スペルが違う可能性あり。//アタック1なら
         {
-            GetComponent<Oil_Controller>().Set_Oil(-Enemy2);
+            Oil_C.Set_Oil(-Enemy2);
         }
     }
 }

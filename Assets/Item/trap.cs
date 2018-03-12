@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class trap : MonoBehaviour {
+public class trap : MonoBehaviour
+{
 
     [SerializeField, Header("当たったプレイヤーを保存しておく変数")]
     GameObject player;
@@ -20,38 +21,51 @@ public class trap : MonoBehaviour {
 
     SpriteRenderer MainSprite;
 
-	// Use this for initialization
-	void Start () {
+    bool trapflg=true;
+
+    soundContolloer SE;
+    // Use this for initialization
+    void Start()
+    {
 
         MainSprite = GetComponent<SpriteRenderer>();
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        SE = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         if (flg == true)
         {
             time += Time.deltaTime;
+            if (time > traptime)
+            {
+                trapclaer();
+            }
         }
-	
-	}
+
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
 
         if (other.tag == "Player")
         {
-            player = other.gameObject;
-            MainSprite.sprite = wanaWoriking;
-            player.GetComponent<player_move>().enabled = false;
-            if (time > traptime)
-            {
-                player.GetComponent<player_move>().enabled = true;
-                time = 0.0f;
-                Destroy(gameObject);
-            }
-
+            
+                player = other.gameObject;
+                MainSprite.sprite = wanaWoriking;
+                SE.select_SE(5);
+                player.GetComponent<player_move>().enabled = false;
+                flg = true; 
+          
         }
     }
+    void trapclaer()
+    {
+      
+            player.GetComponent<player_move>().enabled = true;
+            time = 0.0f;
+            Destroy(gameObject);
+    }
+    
 }

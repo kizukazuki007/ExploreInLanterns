@@ -4,21 +4,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 
-/// <summary>
-/// プレイヤーの番号
-/// </summary>
-public enum Player_Type
-{
-    player_1 = 1,
-    player_2,
-    player_3,
-    player_4
-}
-
 public class JoinSystem : MonoBehaviour {
-
-    //プレイヤーの番号を判別
-    public Player_Type type;
+    
 
     public GameObject P1entry;
     public GameObject P2entry;
@@ -34,7 +21,7 @@ public class JoinSystem : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Member=TitleSystem.Get_Member();
+        Member=0;
 
         P1entry = GameObject.Find("1P_E");
         P2entry = GameObject.Find("2P_E");
@@ -82,7 +69,8 @@ public class JoinSystem : MonoBehaviour {
 
         if (Input.GetButtonDown("Cancel"))
         {
-            SceneManager.LoadScene("");
+            TitleSystem.Set_Member(Member);
+            SceneManager.LoadScene("GameMain");
         }
     }
 }

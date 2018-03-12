@@ -26,4 +26,18 @@ public class left_attck : MonoBehaviour {
         time += Time.deltaTime;
 
     }
+
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        Destroy(gameObject);
+        print("kgkkedfsv vfaav@fwfdndnvn:");
+        //GameObject hitter = other.gameObject;
+        //if (hitter.GetComponent<BoxCollider2D>().isTrigger ==false)
+        //{
+        //    Destroy(gameObject);
+        //}
+      
+       
+    }
 }

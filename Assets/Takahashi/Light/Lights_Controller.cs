@@ -7,14 +7,14 @@ public class Lights_Controller : MonoBehaviour
     [SerializeField, Tooltip("半径")]
     float radius;
 
-    GameObject player;
+    GameObject player,GOstorage;
     CircleCollider2D Lanterns_Range;
 
     //int player_x, player_y;
     float radius_max = 3.0f; //distance, lightPower;
     float oil, oil_max = 180.0f;
     float color;
-
+    
     // Use this for initialization
     void Start()
     {
@@ -50,9 +50,15 @@ public class Lights_Controller : MonoBehaviour
     {
         if (other.tag != "Player")
         {
-            if (other.tag != "Light")
+            if (player == null)
             {
-                try
+                GOstorage = other.gameObject;
+                Invoke("Bg_L", 0.001f);
+            }
+            //if (other.tag != "Light")
+            //{
+
+            try
                 {
                     other.gameObject.GetComponent<Background_Light>().Color_Cange(player, radius);
                 }
@@ -60,16 +66,20 @@ public class Lights_Controller : MonoBehaviour
                 {
 
                 }
-            }
+            //}
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag != "Player")
         {
-            if (other.tag != "Light")
+            if (player == null)
             {
-                try
+                Debug.Log("ぷれいやーはいってないです。");
+            }
+            //if (other.tag != "Light")
+            //{
+            try
                 {
                     other.gameObject.GetComponent<Background_Light>().Exit_Player(player);
                 }
@@ -77,7 +87,11 @@ public class Lights_Controller : MonoBehaviour
                 {
 
                 }   
-            }
+            //}
         }
+    }
+    void Bg_L()
+    {
+        GOstorage.GetComponent<Background_Light>().Color_Cange(player, radius);
     }
 }

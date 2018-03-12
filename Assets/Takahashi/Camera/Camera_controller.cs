@@ -72,6 +72,10 @@ public class Camera_controller : MonoBehaviour {
         {
             multi = false;
         }
+        else
+        {
+            multi = true;
+        }
 
         target_player = players[0];
         z = transform.position.z;

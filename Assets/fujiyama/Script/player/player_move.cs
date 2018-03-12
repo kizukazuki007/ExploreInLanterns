@@ -164,7 +164,6 @@ public class player_move : MonoBehaviour
                 //{
                     if (Time.frameCount % framecount == 0)
                     {
-                        print(i);
                         if (i > 1)
                         {
                             i = 0;
@@ -314,6 +313,10 @@ public class player_move : MonoBehaviour
                 }
             }
         }
+    public int Get_PlayerNumber()
+    {
+        return (int)type;
     }
+}
 
 

@@ -14,6 +14,7 @@ public class stautascontolloer : MonoBehaviour {
 
     void Start()
     {
+        score = 0;
         for (int i = 0; i <= 3; i++)
         {
             ya_honnsu[i] += initial_value;
@@ -24,7 +25,11 @@ public class stautascontolloer : MonoBehaviour {
     // Update is called once per frame
     public void score_set(int i)
     {
-
+        score += i;
     }
 
+    public static int score_get()
+    {
+        return score;
+    }
 }

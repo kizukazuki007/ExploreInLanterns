@@ -14,11 +14,14 @@ public class item_event : MonoBehaviour {
     [SerializeField, Header("0、オイル　1から3の間に宝玉を入れて下さい")]
     GameObject[] trasure_oil;
 
+    [SerializeField]
+    GameObject storage;
+
     int rad;
 
     int trsuea_rand;
 
-    bool seisei=true;
+    bool seisei=true,open = false;
     
 
 	// Use this for initialization
@@ -28,7 +31,7 @@ public class item_event : MonoBehaviour {
 
         Mainsprite = GetComponent<SpriteRenderer>();
 
-        rad = Random.Range(1, 3);
+        rad = Random.Range(1, 4);
 
         trsuea_rand = Random.Range(1, 4);
         
@@ -43,7 +46,7 @@ public class item_event : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "attack")
+        if ((other.tag == "Attack1"||other.tag== "Attack2")&&open ==false)
         {
             Mainsprite.sprite = trasuerOpen;
 
@@ -52,50 +55,53 @@ public class item_event : MonoBehaviour {
                 if (seisei == true)
                 {
                     trasure_oil[0].transform.position = new Vector3(pos.x, pos.y, pos.y);
-                    Instantiate(trasure_oil[1]);
+                    storage = Instantiate(trasure_oil[0]);
                     seisei = false;
                 }
             }
 
             if (rad == 2)
             {
-                trasure_oil[4].transform.position = new Vector3(pos.x, pos.y, pos.y);
-                Instantiate(trasure_oil[4]);
-                seisei = false;
+                if (seisei == true)
+                {
+                    trasure_oil[4].transform.position = new Vector3(pos.x, pos.y, pos.y);
+                    storage = Instantiate(trasure_oil[4]);
+                    seisei = false;
+                }
             }
-        }
-            else
+            if(rad==3)
             {
                 if (seisei == true)
                 {
                     if (trsuea_rand == 1)
                     {
                         trasure_oil[1].transform.position = new Vector3(pos.x, pos.y, pos.z);
-                        Instantiate(trasure_oil[2]);
+                        storage = Instantiate(trasure_oil[1]);
                         seisei = false;
                     }
-
-                }
-                if (seisei == true)
-                {
-                    if(trsuea_rand == 2)
+                    if (trsuea_rand == 2)
                     {
                         trasure_oil[2].transform.position = new Vector3(pos.x, pos.y, pos.z);
-                        Instantiate(trasure_oil[2]);
+                        storage = Instantiate(trasure_oil[2]);
                         seisei = false;
                     }
-                }
 
-                else
-                {
-                    trasure_oil[3].transform.position = new Vector3(pos.x, pos.y, pos.z);
-                    Instantiate(trasure_oil[3]);
-                    seisei = false;
+                    if (trsuea_rand==3)
+                    {
+                        trasure_oil[3].transform.position = new Vector3(pos.x, pos.y, pos.z);
+                        storage = Instantiate(trasure_oil[3]);
+                        seisei = false;
+                    }
+                
+                 
                 }
             }
+            open = true;
+            storage.transform.parent = transform;
+        }
 
            
-        }
+    }
    
 }
 
