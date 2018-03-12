@@ -13,32 +13,57 @@ public class AnemyMove : MonoBehaviour
     Vector3 target;
     bool anemyInRoom = true;
     int houkou = 0;
+    int movePatern;
+
+    soundContolloer SE;
+    void Awake()
+    {
+        SE = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
+        movePatern = Random.Range(0, 3);//0なら部屋内完全ランダム１なら完全追従２ならランダム→部屋内追従
+    }
     void Start()
     {
+        SE.GetComponent<soundContolloer>();
         MManege = GameObject.Find("MAPCreate").GetComponent<MapManege>();
         target = transform.position;
     }
     void Update()
     {
-        if (PlayerInRoom())
-        {
-            target = MManege.camera.transform.position;                 //1pからではなくカメラからとるのは、そいつが死んでもカメラは動くから。簡単
-            target.z = 0;
-            // aifuhaiure(target);
-        }
-        else
+        if (movePatern == 0)
         {
             if (Vector3.Distance(transform.position, target) < 0.5f)
             {
-                if (anemyInRoom)
+                target = RandameMove();
+            }
+        }
+        else
+        {
+            if (PlayerInRoom())
+            {
+                target = MManege.camera.transform.position;                 //1pからではなくカメラからとるのは、そいつが死んでもカメラは動くから。簡単
+                target.z = 0;
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, target) < 0.5f)
                 {
-                    target = NoPlayer();
-                    anemyInRoom = false;
-                }
-                else
-                {
-                    target = aisle();
-                    anemyInRoom = true;
+                    if (movePatern == 1)
+                    {
+                        if (anemyInRoom)
+                        {
+                            target = NoPlayer();
+                            anemyInRoom = false;
+                        }
+                        else
+                        {
+                            target = aisle();
+                            anemyInRoom = true;
+                        }
+                    }
+                    else
+                    {
+                        target = RandameMove();
+                    }
                 }
             }
         }
@@ -60,6 +85,11 @@ public class AnemyMove : MonoBehaviour
         }
     }
 
+    Vector3 RandameMove()
+    {
+        Vector3 randa = new Vector3(Random.Range(MinX(), MaxX()), Random.Range(MinY(), MaxY()));
+        return randa;
+    }
     Vector3 NoPlayer()//プレーヤーが部屋にいないときに向かう場所。
     {
         Vector3[] direction = new Vector3[4];//順に上下左右の辺での穴の開いてる場所(無い場合有)
@@ -320,6 +350,14 @@ public class AnemyMove : MonoBehaviour
     {
         if (other.gameObject.tag == "Attack1" || other.gameObject.tag == "Attack2")
         {
+            if (other.gameObject.tag == "Attack1")
+            {
+                SE.select_SE(6);
+            }
+            else
+            {
+                SE.select_SE(7);
+            }
             this.speed = 0.5f;
         }
     }

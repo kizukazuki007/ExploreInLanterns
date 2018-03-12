@@ -12,15 +12,15 @@ public class player_app : MonoBehaviour {
 
     public bool onflg = false;
 
-    
-
-    
+    soundContolloer BGM;
     
 
 	// Use this for initialization
 	void Start ()
     {
         player_num = TitleSystem.Get_Member();
+        BGM = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
+        BGM.select_BGM(1);
 	
 	}
 	

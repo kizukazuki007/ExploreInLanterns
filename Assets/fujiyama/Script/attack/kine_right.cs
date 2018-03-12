@@ -8,7 +8,7 @@ public class kine_right : MonoBehaviour {
     public float time;
 	// Use this for initialization
 	void Start () {
-        speed = 5.0f;
+        speed = 7.0f;
 	
 	}
 	

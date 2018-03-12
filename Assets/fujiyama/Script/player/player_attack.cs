@@ -32,13 +32,21 @@ public class player_attack : MonoBehaviour {
 
     stautascontolloer st;
 
+    [SerializeField]
+    string attack,attack2;
+
+    soundContolloer SE;
+
 
     void Awake()
     {
+        
         for (int i = 0; i < player.Length; i++)
         {
             if (gameObject.name == player[i].name) num = i;
         }
+        attack = "P" + GetComponent<player_move>().Get_PlayerNumber() + "_attack";
+        attack2 = "P" + GetComponent<player_move>().Get_PlayerNumber() + "_attack2";
     }
 
 
@@ -46,6 +54,7 @@ public class player_attack : MonoBehaviour {
     void Start () {
 
         direction = GetComponent<player_move>();
+        SE = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
 
         time = 10.0f;
 
@@ -62,9 +71,9 @@ public class player_attack : MonoBehaviour {
         {
 
 
-            if (Input.GetButtonDown("P1_attack"))
+            if (Input.GetButtonDown(attack))
             {
-                //Debug.Log("aa");
+                SE.select_SE(0);
                 Debug.Log(direction.muki);
                 switch (direction.muki)
                 {
@@ -108,16 +117,14 @@ public class player_attack : MonoBehaviour {
                             st.ya_honnsu[num] -= 1;
                         }
                         break;
-
-
-
                 }
 
             }
 
         }
-        if (Input.GetButtonDown("P1_attack2"))
+        if (Input.GetButtonDown(attack2))
         {
+            SE.select_SE(1);
             switch (direction.muki)
             {
                 case 1:

@@ -27,12 +27,18 @@ public class UI_Controller : MonoBehaviour {
     int Player_Number;
 
     bool [] Pdeath;
+    bool Restart_now = false;
+
+    soundContolloer BGM;
 
     // Use this for initialization
     void Start ()
     {
+        BGM = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
         //スコア初期化
         score = 0;
+
+        BGM.select_BGM(0);
 	}
 	
 	// Update is called once per frame
@@ -89,6 +95,7 @@ public class UI_Controller : MonoBehaviour {
     }
     public void Player_Death(int Number)
     {
+        player[Number].SetActive(false);
         Pdeath[Number] = true;
         bool life = true;
         for(int i = 0; i < Player_Number; i++)
@@ -99,9 +106,18 @@ public class UI_Controller : MonoBehaviour {
                 i = Player_Number;
             }
         }
-        if (life == true)
+        if (life == true && Restart_now==false)
         {
             SceneManager.LoadScene("Result");
         }
+    }
+    public void Set_RestartTrue()
+    {
+        Restart_now = true;
+        
+    }
+    public void Set_RestartFalse()
+    {
+        Restart_now = false;
     }
 }

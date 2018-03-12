@@ -5,9 +5,12 @@ public class sound : MonoBehaviour {
 
     soundContolloer sound_come;
 
+  
+
     void Awake()
     {
         sound_come = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
+        
     }
 
 	// Use this for initialization
@@ -21,4 +24,15 @@ public class sound : MonoBehaviour {
 	void Update () {
 	
 	}
+
+
+    void BGM_select(int i=0)
+    {
+        sound_come.select_BGM(i);
+    }
+
+    void SE_select(int j = 0)
+    {
+        sound_come.select_SE(j);
+    }
 }

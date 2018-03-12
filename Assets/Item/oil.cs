@@ -15,7 +15,14 @@ public class oil : MonoBehaviour {
     [SerializeField, Tooltip("ランダム60以上90以下のオイル量")]
     public float oil3 = 60.0f;
 
-	// Use this for initialization
+    // Use this for initialization
+
+    soundContolloer SE;
+
+    void Awake()
+    {
+        SE = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
+    }
 	
 	
 	// Update is called once per frame
@@ -26,6 +33,7 @@ public class oil : MonoBehaviour {
         {
             hitter = other.gameObject;
 
+           
             int oil = Random.Range(1, 100);
 
             if (oil >= 30)
@@ -44,6 +52,7 @@ public class oil : MonoBehaviour {
             {
                 plus = 10.0f;
             }
+            SE.select_SE(3);
             hitter.GetComponent<Oil_Controller>().Set_Oil(plus);
             Destroy(gameObject);
 

@@ -21,7 +21,7 @@ public class JoinSystem : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Member=TitleSystem.Get_Member();
+        Member=0;
 
         P1entry = GameObject.Find("1P_E");
         P2entry = GameObject.Find("2P_E");
@@ -70,7 +70,7 @@ public class JoinSystem : MonoBehaviour {
         if (Input.GetButtonDown("Cancel"))
         {
             TitleSystem.Set_Member(Member);
-            SceneManager.LoadScene("proto");
+            SceneManager.LoadScene("GameMain");
         }
     }
 }

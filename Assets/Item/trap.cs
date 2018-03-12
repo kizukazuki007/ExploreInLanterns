@@ -21,12 +21,15 @@ public class trap : MonoBehaviour
 
     SpriteRenderer MainSprite;
 
+    bool trapflg=true;
+
+    soundContolloer SE;
     // Use this for initialization
     void Start()
     {
 
         MainSprite = GetComponent<SpriteRenderer>();
-
+        SE = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
     }
 
     // Update is called once per frame
@@ -48,10 +51,13 @@ public class trap : MonoBehaviour
 
         if (other.tag == "Player")
         {
-            player = other.gameObject;
-            MainSprite.sprite = wanaWoriking;
-            player.GetComponent<player_move>().enabled = false;
-            flg = true;
+            
+                player = other.gameObject;
+                MainSprite.sprite = wanaWoriking;
+                SE.select_SE(5);
+                player.GetComponent<player_move>().enabled = false;
+                flg = true; 
+          
         }
     }
     void trapclaer()

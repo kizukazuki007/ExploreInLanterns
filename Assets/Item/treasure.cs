@@ -13,6 +13,8 @@ public class treasure : MonoBehaviour {
     public string trasure_name2;
 
     public string trasure_name3;
+
+    soundContolloer SE;
     
 
     // Use this for initialization
@@ -20,6 +22,7 @@ public class treasure : MonoBehaviour {
 
     void Awake()
     {
+        SE = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
         
 
         UI_Con = GameObject.Find("UI_Controller");
@@ -45,6 +48,7 @@ public class treasure : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+            SE.select_SE(2);
             stautascontolloer.score += treasure_score;
             UI_Con.GetComponent<UI_Controller>().Set_Score(treasure_score);
             Destroy(gameObject);

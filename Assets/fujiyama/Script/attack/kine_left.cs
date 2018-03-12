@@ -8,7 +8,7 @@ public class kine_left : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        speed = 5.0f;
+        speed = 7.0f;
 	
 	}
 	

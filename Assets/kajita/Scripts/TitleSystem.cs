@@ -33,6 +33,8 @@ public class TitleSystem : MonoBehaviour
 
     public bool test = false;
 
+    bool easyselect=false;
+
     private float interval_button; // ゲームモード選択ボタン出現までの時間
     private float ready_time;
 
@@ -78,7 +80,7 @@ public class TitleSystem : MonoBehaviour
             if (Input.GetButtonDown("Decision") && gamemode == 0 && ready_time > 1.0f)
             {
                 ready_time = 0;
-                SceneManager.LoadScene("proto");
+                SceneManager.LoadScene("GameMain");
             }
 
             else if (Input.GetButtonDown("Decision") && gamemode == 1 && ready_time > 1.0f)
@@ -124,6 +126,7 @@ public class TitleSystem : MonoBehaviour
 
             Single.Select();
             Select = 0;
+            easyselect = false;
 
             audioSource.clip = cancel;
             audioSource.Play();
@@ -137,6 +140,7 @@ public class TitleSystem : MonoBehaviour
             difficulty_View = true; // 難易度選択のトリガーをfalseに
 
             Select = 0;
+            easyselect = false;
 
             // 表示
             EASY.SetActive(true);
@@ -170,12 +174,12 @@ public class TitleSystem : MonoBehaviour
 
             Single.Select();
 
-            if (Input.GetAxis("P1_Horizontal") == 1)
+            if ((int)Input.GetAxis("P1_Horizontal") == 1)
             {
                 Single.Select();
             }
 
-            if (Input.GetAxis("P1_Horizontal") == -1)
+            if ((int)Input.GetAxis("P1_Horizontal") == -1)
             {
                 Multi.Select();
             }
@@ -227,14 +231,15 @@ public class TitleSystem : MonoBehaviour
         Normal = GameObject.Find("Canvas/NORMAL").GetComponent<Button>();
         Hard = GameObject.Find("Canvas/HARD").GetComponent<Button>();
 
-        if (Input.GetAxis("P1_Vertical") == -1)
+        if ((int)Input.GetAxis("P1_Vertical") == -1)
         {
             Select = 1;
         }
 
-        if (Select == 0)
+        if (Select == 0&&easyselect == false)
         {
             Easy.Select();
+            easyselect = true;
         }
     }
 
@@ -315,21 +320,30 @@ public class TitleSystem : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 難易度設定
+    /// </summary>
     public static int Get_Difficulty()
     {
         return Difficulty;
     }
 
+    /// <summary>
+    /// プレイヤー人数設定(マルチ参加のシーンから設定する)
+    /// </summary>
     public static void Set_Member(int member)
     {
         Member = member;
     }
 
+    /// <summary>
+    /// プレイヤー人数設定
+    /// </summary>
     public static int Get_Member()
     {
         return Member;
     }
-
+    
     public void SET_READY()
     {
         READY.SetActive(true);

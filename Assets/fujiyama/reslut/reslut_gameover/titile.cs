@@ -20,6 +20,14 @@ public class titile : MonoBehaviour {
     bool return_title;
 
     Text tex;
+
+    soundContolloer BGM;
+
+    void Awake()
+    {
+        BGM = GameObject.Find("soundContolloer").GetComponent<soundContolloer>();
+        BGM.select_BGM(2);
+    }
 	// Use this for initialization
 	void Start ()
     {

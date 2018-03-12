@@ -20,7 +20,6 @@ public class player_move : MonoBehaviour
     public PlayerType type;
 
     //仮想入力の名前
-    [SerializeField]
     string Horizontal_p;
     string Vertical_p;
 
@@ -314,6 +313,10 @@ public class player_move : MonoBehaviour
                 }
             }
         }
+    public int Get_PlayerNumber()
+    {
+        return (int)type;
     }
+}
 
 

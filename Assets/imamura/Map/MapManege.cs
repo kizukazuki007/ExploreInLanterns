@@ -12,8 +12,8 @@ public class MapManege : MonoBehaviour {
     int trapCount;
 
     int[] MonsterMax = { 7, 10, 15 };
-    int[] presentBoxMax= { 100, 3, 3 };
-    int[] trapMax = { 3, 5, 5 };
+    int[] presentBoxMax= { 50, 25, 10 };
+    int[] trapMax = { 3, 5, 10 };
 
     public GameObject stairs;//強制１個
                                         //iventのゲームオブジェクトをすべて一つの変数にまとめてしまえば一発でできる？←要検討
@@ -35,8 +35,14 @@ public class MapManege : MonoBehaviour {
     public GameObject []getPlayer=new GameObject[4];      //他の人が使うよう
     public static int Floor;//他の人　階層
     
+    [SerializeField]
     float[] oil;
 
+    bool onetime = false;
+
+    GameObject UI_Con;
+    
+    #region マップチップ
     //[SerializeField]      
     public int[,,] mapChipI = {
         {
@@ -151,11 +157,21 @@ public class MapManege : MonoBehaviour {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         }
     };
+    #endregion
+
     public void StairsUP()//階段を上がった時。               
     {
+        UI_Con.GetComponent<UI_Controller>().Set_RestartTrue();
         AllDestroy();
         AllCreate();
-        GameObject.Find("UI_Controller").GetComponent<UI_Controller>().Set_CaveName(Floor);
+        if(onetime ==true)
+        {
+            for (int i = 0; i < playerCount; i++)
+            {
+                getPlayer[i].GetComponent<Oil_Controller>().Set_RestartOil(oil[i]);
+            }
+        }
+        UI_Con.GetComponent<UI_Controller>().Set_CaveName(Floor);
     }
     public int monsterCreate=5;
     public void MonsterDedCreate()//   モンスターが死んだときに呼び出すもの
@@ -186,6 +202,7 @@ public class MapManege : MonoBehaviour {
         MonsterCount = MonsterMax[difficulty];
         presentBoxCount = presentBoxMax[difficulty];
         trapCount = trapMax[difficulty];
+        UI_Con = GameObject.Find("UI_Controller");
 
         Floor = 0;
         for (int i = 0; i < ivent.GetLength(0); i++)
@@ -195,14 +212,15 @@ public class MapManege : MonoBehaviour {
                     ivent[i, j] = nullObject;
             }
         }
+        oil = new float[playerCount];
         StairsUP();
 
         difficulty = TitleSystem.Get_Difficulty(); // タイトルシステムから難易度の変数を読み込む。
-        for(int i = 0; i < playerCount; i++)
+        for (int i = 0; i < playerCount; i++)
         {
             getPlayer[i].GetComponent<Oil_Controller>().set_InitialOil(difficulty);
+            onetime = true;
         }
-        oil = new float[playerCount];
 
     }
     void Update()//でバック用
@@ -234,6 +252,14 @@ public class MapManege : MonoBehaviour {
     }
     void AllDestroy()
     {
+        if (onetime ==true)
+        {
+            for (int i = 0; i < playerCount; i++)
+            {
+                oil[i] = getPlayer[i].GetComponent<Oil_Controller>().Get_Oil();
+            }
+        }
+
         for (int i = 0; i < mapChipI.GetLength(1); i++)
         {
             for (int j = 0; j < mapChipI.GetLength(2); j++)
@@ -385,8 +411,10 @@ public class MapManege : MonoBehaviour {
             }
         }
         //1Pの近くに２P３P４P
-        GameObject.Find("UI_Controller").GetComponent<UI_Controller>().Set_player(getPlayer,playerCount);
+        UI_Con.GetComponent<UI_Controller>().Set_player(getPlayer,playerCount);
+        UI_Con.GetComponent<UI_Controller>().Set_RestartFalse();
         camera.GetComponent<Camera_controller>().Start_Camera(getPlayer, playerCount);
+        
     }
     bool aisleTrue(int x,int y)
     {

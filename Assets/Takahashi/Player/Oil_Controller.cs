@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Oil_Controller : MonoBehaviour {
     
+
     [SerializeField, Tooltip("playerの持つオイル量")]
     private float Oil;
 
